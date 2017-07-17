@@ -200,11 +200,13 @@ public class SDGridLayout extends ViewGroup
         {
             final int colWidth = getColumnWidth(getMeasuredWidth());
             int col = 0;
+            int row = 0;
             int left = 0;
             int top = 0;
             for (int i = 0; i < count; i++)
             {
                 col = i % mColumnCount;
+                row = i / mColumnCount;
 
                 if (col == 0)
                 {
@@ -214,7 +216,7 @@ public class SDGridLayout extends ViewGroup
                 View child = getChildAt(i);
 
                 final int right = left + colWidth;
-                final int bottom = top + child.getMeasuredHeight();
+                final int bottom = top + mArrRowHeight.get(row);
                 child.layout(left, top, right, bottom);
 
                 //下一列的left
