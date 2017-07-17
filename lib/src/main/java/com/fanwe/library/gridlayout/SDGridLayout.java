@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 
 /**
  * Created by Administrator on 2017/7/17.
@@ -26,10 +27,26 @@ public class SDGridLayout extends ViewGroup
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * 列数
+     */
     private int mColumnCount = 1;
+    /**
+     * 水平方向间距
+     */
     private int mHorizontalSpacing;
+    /**
+     * 竖直方向间距
+     */
     private int mVerticalSpacing;
 
+    private BaseAdapter mAdapter;
+
+    /**
+     * 设置列数
+     *
+     * @param columnCount
+     */
     public void setColumnCount(int columnCount)
     {
         if (mColumnCount != columnCount)
@@ -38,6 +55,11 @@ public class SDGridLayout extends ViewGroup
         }
     }
 
+    /**
+     * 设置水平方向间距
+     *
+     * @param horizontalSpacing
+     */
     public void setHorizontalSpacing(int horizontalSpacing)
     {
         if (mHorizontalSpacing != horizontalSpacing)
@@ -46,6 +68,11 @@ public class SDGridLayout extends ViewGroup
         }
     }
 
+    /**
+     * 设置竖直方向间距
+     *
+     * @param verticalSpacing
+     */
     public void setVerticalSpacing(int verticalSpacing)
     {
         if (mVerticalSpacing != verticalSpacing)
