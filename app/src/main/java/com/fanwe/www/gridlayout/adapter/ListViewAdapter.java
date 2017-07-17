@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.fanwe.library.adapter.SDSimpleAdapter;
 import com.fanwe.library.model.SelectableModel;
+import com.fanwe.library.utils.SDViewUtil;
 import com.fanwe.www.gridlayout.R;
 
 import java.util.List;
@@ -30,6 +31,14 @@ public class ListViewAdapter extends SDSimpleAdapter<SelectableModel>
     @Override
     public void bindData(int position, View convertView, ViewGroup parent, SelectableModel model)
     {
+        convertView.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
 
+        if (position % 2 == 0)
+        {
+            SDViewUtil.setHeight(convertView, 100);
+        } else
+        {
+            SDViewUtil.setHeight(convertView, 200);
+        }
     }
 }
