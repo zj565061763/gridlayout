@@ -19,5 +19,6 @@ public class MainActivity extends AppCompatActivity
 
         view_grid.setColumnCount(3);
         view_grid.setVerticalSpacing(10);
+        view_grid.setHorizontalSpacing(10);
     }
 }

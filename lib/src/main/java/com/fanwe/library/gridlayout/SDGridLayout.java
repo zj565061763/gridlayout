@@ -76,14 +76,11 @@ public class SDGridLayout extends ViewGroup
         {
             final int colWidth = getColumnWidth();
             int col = 0;
-            int row = 0;
             int left = 0;
             int top = 0;
             for (int i = 0; i < count; i++)
             {
                 col = i % mColumnCount;
-                row = i / mColumnCount;
-
                 if (col == 0)
                 {
                     left = 0;
@@ -91,13 +88,15 @@ public class SDGridLayout extends ViewGroup
 
                 View child = getChildAt(i);
 
-                top = row * child.getMeasuredHeight();
-
                 final int right = left + colWidth;
                 final int bottom = top + child.getMeasuredHeight();
                 child.layout(left, top, right, bottom);
 
                 left = right + mVerticalSpacing;
+                if (col + 1 == mColumnCount)
+                {
+                    top = bottom + mHorizontalSpacing;
+                }
             }
         }
     }
