@@ -82,6 +82,11 @@ public class SDGridLayout extends ViewGroup
         }
     }
 
+    /**
+     * 设置适配器
+     *
+     * @param adapter
+     */
     public void setAdapter(BaseAdapter adapter)
     {
         if (mAdapter != null)
