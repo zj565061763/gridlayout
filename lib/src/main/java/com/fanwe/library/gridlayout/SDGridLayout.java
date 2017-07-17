@@ -148,6 +148,7 @@ public class SDGridLayout extends ViewGroup
         int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
 
         int cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidth(sizeWidth), MeasureSpec.EXACTLY);
+        int cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(sizeHeight, MeasureSpec.AT_MOST);
         int count = getChildCount();
         int col = 0;
         int row = 0;
@@ -168,7 +169,7 @@ public class SDGridLayout extends ViewGroup
             }
 
             View child = getChildAt(i);
-            measureChild(child, cWidthMeasureSpec, heightMeasureSpec);
+            measureChild(child, cWidthMeasureSpec, cHeightMeasureSpec);
 
             if (child.getMeasuredHeight() > rowHeight)
             {
