@@ -8,6 +8,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="fsdfjosjfosijdfosijfosdjfosijf"/>
+        android:text="123456789123456789123456789123456789"/>
 
 </LinearLayout>

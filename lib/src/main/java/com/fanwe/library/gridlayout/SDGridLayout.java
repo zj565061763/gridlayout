@@ -139,6 +139,16 @@ public class SDGridLayout extends ViewGroup
         return colWidth;
     }
 
+    private int getColumnIndex(int childIndex)
+    {
+        return childIndex % mColumnCount;
+    }
+
+    private int getRowIndex(int childIndex)
+    {
+        return childIndex / mColumnCount;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
@@ -156,7 +166,7 @@ public class SDGridLayout extends ViewGroup
         int totalHeight = 0;
         for (int i = 0; i < count; i++)
         {
-            row = i / mColumnCount;
+            row = getRowIndex(i);
 
             if (row != tempRow)
             {
@@ -195,18 +205,19 @@ public class SDGridLayout extends ViewGroup
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b)
     {
-        final int count = getChildCount();
+        int count = getChildCount();
         if (count > 0)
         {
-            final int colWidth = getColumnWidth(getMeasuredWidth());
+            int colWidth = getColumnWidth(getMeasuredWidth());
+            int lastColWidth = getWidth() - (mColumnCount - 1) * (colWidth + mVerticalSpacing);
             int col = 0;
             int row = 0;
             int left = 0;
             int top = 0;
             for (int i = 0; i < count; i++)
             {
-                col = i % mColumnCount;
-                row = i / mColumnCount;
+                col = getColumnIndex(i);
+                row = getRowIndex(i);
 
                 if (col == 0)
                 {
@@ -215,8 +226,14 @@ public class SDGridLayout extends ViewGroup
 
                 View child = getChildAt(i);
 
-                final int right = left + colWidth;
-                final int bottom = top + mArrRowHeight.get(row);
+                if (col == mColumnCount - 1)
+                {
+                    //由于除不尽导致的计算偏差，默认最后一列
+                    colWidth = lastColWidth;
+                }
+
+                int right = left + colWidth;
+                int bottom = top + mArrRowHeight.get(row);
                 child.layout(left, top, right, bottom);
 
                 //下一列的left
