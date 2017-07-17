@@ -18,5 +18,6 @@ public class MainActivity extends AppCompatActivity
         view_grid = (SDGridLayout) findViewById(R.id.view_grid);
 
         view_grid.setColumnCount(3);
+        view_grid.setVerticalSpacing(10);
     }
 }

@@ -27,22 +27,36 @@ public class SDGridLayout extends ViewGroup
     }
 
     private int mColumnCount = 1;
+    private int mHorizontalSpacing;
+    private int mVerticalSpacing;
 
     public void setColumnCount(int columnCount)
     {
-        if (columnCount < 1)
-        {
-            columnCount = 1;
-        }
         if (mColumnCount != columnCount)
         {
             mColumnCount = columnCount;
         }
     }
 
+    public void setHorizontalSpacing(int horizontalSpacing)
+    {
+        if (mHorizontalSpacing != horizontalSpacing)
+        {
+            mHorizontalSpacing = horizontalSpacing;
+        }
+    }
+
+    public void setVerticalSpacing(int verticalSpacing)
+    {
+        if (mVerticalSpacing != verticalSpacing)
+        {
+            mVerticalSpacing = verticalSpacing;
+        }
+    }
+
     private int getColumnWidth()
     {
-        int colWidth = (int) (((float) getMeasuredWidth() / mColumnCount) + 0.5f);
+        int colWidth = (int) (((getMeasuredWidth() - ((mColumnCount - 1) * mVerticalSpacing)) / (float) mColumnCount) + 0.5f);
         return colWidth;
     }
 
@@ -60,21 +74,30 @@ public class SDGridLayout extends ViewGroup
         final int count = getChildCount();
         if (count > 0)
         {
-            final int colWidth = (int) (((float) getWidth() / mColumnCount) + 0.5f);
+            final int colWidth = getColumnWidth();
             int col = 0;
             int row = 0;
+            int left = 0;
+            int top = 0;
             for (int i = 0; i < count; i++)
             {
                 col = i % mColumnCount;
                 row = i / mColumnCount;
 
+                if (col == 0)
+                {
+                    left = 0;
+                }
+
                 View child = getChildAt(i);
 
-                final int left = col * colWidth;
-                final int top = row * child.getMeasuredHeight();
+                top = row * child.getMeasuredHeight();
+
                 final int right = left + colWidth;
                 final int bottom = top + child.getMeasuredHeight();
                 child.layout(left, top, right, bottom);
+
+                left = right + mVerticalSpacing;
             }
         }
     }
