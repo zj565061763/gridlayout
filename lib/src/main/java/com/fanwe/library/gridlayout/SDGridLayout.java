@@ -1,6 +1,7 @@
 package com.fanwe.library.gridlayout;
 
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +79,49 @@ public class SDGridLayout extends ViewGroup
         if (mVerticalSpacing != verticalSpacing)
         {
             mVerticalSpacing = verticalSpacing;
+        }
+    }
+
+    public void setAdapter(BaseAdapter adapter)
+    {
+        if (mAdapter != null)
+        {
+            mAdapter.unregisterDataSetObserver(mDataSetObserver);
+        }
+        mAdapter = adapter;
+        if (adapter != null)
+        {
+            adapter.registerDataSetObserver(mDataSetObserver);
+        }
+        bindData();
+    }
+
+    private DataSetObserver mDataSetObserver = new DataSetObserver()
+    {
+        @Override
+        public void onChanged()
+        {
+            super.onChanged();
+            bindData();
+        }
+    };
+
+    private void bindData()
+    {
+        if (mAdapter == null || mAdapter.getCount() <= 0)
+        {
+            return;
+        }
+
+        removeAllViews();
+        final int count = mAdapter.getCount();
+        for (int i = 0; i < count; i++)
+        {
+            View child = mAdapter.getView(i, null, this);
+            if (child != null)
+            {
+                addView(child);
+            }
         }
     }
 

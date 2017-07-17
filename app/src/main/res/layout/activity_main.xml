@@ -9,28 +9,8 @@
     <com.fanwe.library.gridlayout.SDGridLayout
         android:id="@+id/view_grid"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="btn"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="btn"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="btn"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="btn"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="btn"/>
+        android:layout_height="wrap_content"
+        android:background="@color/green">
 
     </com.fanwe.library.gridlayout.SDGridLayout>
 
