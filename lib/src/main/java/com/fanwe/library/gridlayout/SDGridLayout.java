@@ -178,6 +178,8 @@ public class SDGridLayout extends ViewGroup
             }
 
             View child = getChildAt(i);
+            ViewGroup.LayoutParams params = child.getLayoutParams();
+            cHeightMeasureSpec = getChildMeasureSpec(cHeightMeasureSpec, 0, params.height);
             measureChild(child, cWidthMeasureSpec, cHeightMeasureSpec);
 
             if (child.getMeasuredHeight() > rowHeight)
