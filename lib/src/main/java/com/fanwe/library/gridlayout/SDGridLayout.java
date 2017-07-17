@@ -205,11 +205,9 @@ public class SDGridLayout extends ViewGroup
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b)
     {
-        int colWidth = getColumnWidth(getMeasuredWidth());
-        int lastColWidth = getWidth() - (mColumnCount - 1) * (colWidth + mVerticalSpacing);
+        int colWidth = getColumnWidth(getWidth());
         int col = 0;
         int row = 0;
-        int left = 0;
         int top = 0;
         int count = getChildCount();
         for (int i = 0; i < count; i++)
@@ -217,25 +215,14 @@ public class SDGridLayout extends ViewGroup
             col = getColumnIndex(i);
             row = getRowIndex(i);
 
-            if (col == 0)
-            {
-                left = 0;
-            }
-
             View child = getChildAt(i);
 
-            if (col == mColumnCount - 1)
-            {
-                //由于除不尽导致的计算偏差，默认最后一列填充剩下空间
-                colWidth = lastColWidth;
-            }
-
+            int left = col * (colWidth + mVerticalSpacing);
             int right = left + colWidth;
             int bottom = top + mArrRowHeight.get(row);
+
             child.layout(left, top, right, bottom);
 
-            //下一列的left
-            left = right + mVerticalSpacing;
             if (col + 1 == mColumnCount)
             {
                 //下一行的top
