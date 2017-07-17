@@ -162,6 +162,7 @@ public class SDGridLayout extends ViewGroup
 
             if (row != tempRow)
             {
+                //新一行
                 mArrRowHeight.put(tempRow, rowHeight);
                 totalHeight = totalHeight + rowHeight + mHorizontalSpacing;
 
@@ -182,6 +183,7 @@ public class SDGridLayout extends ViewGroup
         if (rowHeight > 0)
         {
             totalHeight += rowHeight;
+            mArrRowHeight.put(row, rowHeight);
         }
 
         if (modeHeight != MeasureSpec.EXACTLY)
