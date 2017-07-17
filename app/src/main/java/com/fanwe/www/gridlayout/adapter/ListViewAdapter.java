@@ -31,7 +31,7 @@ public class ListViewAdapter extends SDSimpleAdapter<SelectableModel>
     @Override
     public void bindData(int position, View convertView, ViewGroup parent, SelectableModel model)
     {
-        convertView.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
+//        convertView.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
 
 //        if (position % 2 == 0)
 //        {
