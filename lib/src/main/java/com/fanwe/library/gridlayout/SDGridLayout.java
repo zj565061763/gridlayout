@@ -3,6 +3,7 @@ package com.fanwe.library.gridlayout;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -27,6 +28,8 @@ public class SDGridLayout extends ViewGroup
     {
         super(context, attrs, defStyleAttr);
     }
+
+    private SparseArray<Integer> mArrRowHeight = new SparseArray<>();
 
     /**
      * 列数
@@ -130,18 +133,62 @@ public class SDGridLayout extends ViewGroup
         }
     }
 
-    private int getColumnWidth()
+    private int getColumnWidth(int parentWidth)
     {
-        int colWidth = (int) (((getMeasuredWidth() - ((mColumnCount - 1) * mVerticalSpacing)) / (float) mColumnCount) + 0.5f);
+        final int colWidth = (int) (((parentWidth - ((mColumnCount - 1) * mVerticalSpacing)) / (float) mColumnCount) + 0.5f);
         return colWidth;
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
+        int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
+        int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
+        int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
 
-        measureChildren(MeasureSpec.makeMeasureSpec(getColumnWidth(), MeasureSpec.EXACTLY), heightMeasureSpec);
+        int cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidth(sizeWidth), MeasureSpec.EXACTLY);
+        int count = getChildCount();
+        int col = 0;
+        int row = 0;
+        int tempRow = 0;
+        int rowHeight = 0;
+        int totalHeight = 0;
+        for (int i = 0; i < count; i++)
+        {
+            col = i % mColumnCount;
+            row = i / mColumnCount;
+
+            if (row != tempRow)
+            {
+                mArrRowHeight.put(tempRow, rowHeight);
+                totalHeight = totalHeight + rowHeight + mHorizontalSpacing;
+
+                rowHeight = 0;
+            }
+
+            View child = getChildAt(i);
+            measureChild(child, cWidthMeasureSpec, heightMeasureSpec);
+
+            if (child.getMeasuredHeight() > rowHeight)
+            {
+                rowHeight = child.getMeasuredHeight();
+            }
+
+            tempRow = row;
+        }
+
+        if (rowHeight > 0)
+        {
+            totalHeight += rowHeight;
+        }
+
+        if (modeHeight != MeasureSpec.EXACTLY)
+        {
+            sizeHeight = totalHeight;
+        }
+
+        setMeasuredDimension(sizeWidth, sizeHeight);
     }
 
     @Override
@@ -150,7 +197,7 @@ public class SDGridLayout extends ViewGroup
         final int count = getChildCount();
         if (count > 0)
         {
-            final int colWidth = getColumnWidth();
+            final int colWidth = getColumnWidth(getMeasuredWidth());
             int col = 0;
             int left = 0;
             int top = 0;
