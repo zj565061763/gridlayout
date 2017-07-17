@@ -150,14 +150,12 @@ public class SDGridLayout extends ViewGroup
         int cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidth(sizeWidth), MeasureSpec.EXACTLY);
         int cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(sizeHeight, MeasureSpec.AT_MOST);
         int count = getChildCount();
-        int col = 0;
         int row = 0;
         int tempRow = 0;
         int rowHeight = 0;
         int totalHeight = 0;
         for (int i = 0; i < count; i++)
         {
-            col = i % mColumnCount;
             row = i / mColumnCount;
 
             if (row != tempRow)
