@@ -205,6 +205,7 @@ public class SDGridLayout extends ViewGroup
             for (int i = 0; i < count; i++)
             {
                 col = i % mColumnCount;
+
                 if (col == 0)
                 {
                     left = 0;
@@ -216,9 +217,11 @@ public class SDGridLayout extends ViewGroup
                 final int bottom = top + child.getMeasuredHeight();
                 child.layout(left, top, right, bottom);
 
+                //下一列的left
                 left = right + mVerticalSpacing;
                 if (col + 1 == mColumnCount)
                 {
+                    //下一行的top
                     top = bottom + mHorizontalSpacing;
                 }
             }
