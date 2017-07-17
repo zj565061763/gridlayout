@@ -34,7 +34,7 @@ public class SDGridLayout extends ViewGroup
     /**
      * 列数
      */
-    private int mColumnCount = 1;
+    private int mNumColumns = 1;
     /**
      * 水平方向间距
      */
@@ -49,13 +49,13 @@ public class SDGridLayout extends ViewGroup
     /**
      * 设置列数
      *
-     * @param columnCount
+     * @param numColumns
      */
-    public void setColumnCount(int columnCount)
+    public void setNumColumns(int numColumns)
     {
-        if (mColumnCount != columnCount)
+        if (mNumColumns != numColumns)
         {
-            mColumnCount = columnCount;
+            mNumColumns = numColumns;
         }
     }
 
@@ -135,18 +135,18 @@ public class SDGridLayout extends ViewGroup
 
     private int getColumnWidth(int parentWidth)
     {
-        final int colWidth = (int) (((parentWidth - ((mColumnCount - 1) * mVerticalSpacing)) / (float) mColumnCount) + 0.5f);
+        final int colWidth = (int) (((parentWidth - ((mNumColumns - 1) * mVerticalSpacing)) / (float) mNumColumns) + 0.5f);
         return colWidth;
     }
 
     private int getColumnIndex(int childIndex)
     {
-        return childIndex % mColumnCount;
+        return childIndex % mNumColumns;
     }
 
     private int getRowIndex(int childIndex)
     {
-        return childIndex / mColumnCount;
+        return childIndex / mNumColumns;
     }
 
     @Override
@@ -225,7 +225,7 @@ public class SDGridLayout extends ViewGroup
 
             child.layout(left, top, right, bottom);
 
-            if (col + 1 == mColumnCount)
+            if (col + 1 == mNumColumns)
             {
                 //下一行的top
                 top = bottom + mHorizontalSpacing;

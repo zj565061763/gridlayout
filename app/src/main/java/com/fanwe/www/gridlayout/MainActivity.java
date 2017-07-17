@@ -38,7 +38,7 @@ public class MainActivity extends SDBaseActivity
         ListViewAdapter adapter = new ListViewAdapter(mListModel, this);
 
 
-        view_grid.setColumnCount(3);
+        view_grid.setNumColumns(3);
         view_grid.setVerticalSpacing(10);
         view_grid.setHorizontalSpacing(10);
         view_grid.setAdapter(adapter);
