@@ -233,7 +233,7 @@ public class SDGridLayout extends ViewGroup
 
             child.layout(left, top, right, bottom);
 
-            //下一行的left
+            //下一列的left
             left = right + mVerticalSpacing;
             if (col + 1 == mNumColumns)
             {
