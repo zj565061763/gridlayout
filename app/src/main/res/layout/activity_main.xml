@@ -10,6 +10,7 @@
 
         <com.fanwe.library.gridlayout.SDGridLayout
             android:id="@+id/view_grid"
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/green"/>

@@ -135,7 +135,7 @@ public class SDGridLayout extends ViewGroup
 
     private int getColumnWidth(int parentWidth)
     {
-        final int colWidth = (int) (((parentWidth - ((mNumColumns - 1) * mVerticalSpacing)) / (float) mNumColumns) + 0.5f);
+        final int colWidth = (int) (((parentWidth - ((mNumColumns - 1) * mVerticalSpacing) - getPaddingLeft() - getPaddingRight()) / (float) mNumColumns) + 0.5f);
         return colWidth;
     }
 
@@ -210,6 +210,7 @@ public class SDGridLayout extends ViewGroup
         int colWidth = getColumnWidth(getWidth());
         int col = 0;
         int row = 0;
+        int left = 0;
         int top = 0;
         int count = getChildCount();
         for (int i = 0; i < count; i++)
@@ -218,13 +219,22 @@ public class SDGridLayout extends ViewGroup
             row = getRowIndex(i);
 
             View child = getChildAt(i);
+            if (col == 0)
+            {
+                left = getPaddingLeft();
+            }
+            if (row == 0)
+            {
+                top = getPaddingTop();
+            }
 
-            int left = col * (colWidth + mVerticalSpacing);
             int right = left + colWidth;
             int bottom = top + mArrRowHeight.get(row);
 
             child.layout(left, top, right, bottom);
 
+            //下一行的left
+            left = right + mVerticalSpacing;
             if (col + 1 == mNumColumns)
             {
                 //下一行的top
