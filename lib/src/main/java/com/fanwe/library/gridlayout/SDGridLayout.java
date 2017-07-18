@@ -116,12 +116,12 @@ public class SDGridLayout extends ViewGroup
 
     private void bindData()
     {
+        removeAllViews();
         if (mAdapter == null || mAdapter.getCount() <= 0)
         {
             return;
         }
 
-        removeAllViews();
         final int count = mAdapter.getCount();
         for (int i = 0; i < count; i++)
         {
