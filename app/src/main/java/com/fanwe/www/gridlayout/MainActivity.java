@@ -21,9 +21,9 @@ public class MainActivity extends SDBaseActivity
 
         ListViewAdapter adapter = new ListViewAdapter(DataModel.get(100), this);
 
-        view_grid.setNumColumns(3);
-        view_grid.setVerticalSpacing(10);
-        view_grid.setHorizontalSpacing(10);
-        view_grid.setAdapter(adapter);
+        view_grid.setNumColumns(3); //设置列数
+        view_grid.setVerticalSpacing(10); //设置竖直方向的Item间隔
+        view_grid.setHorizontalSpacing(10); //设置水平方向的Item间隔
+        view_grid.setAdapter(adapter); //设置适配器绑定数据
     }
 }
