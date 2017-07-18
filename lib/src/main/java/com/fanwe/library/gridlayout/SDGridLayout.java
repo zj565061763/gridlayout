@@ -198,7 +198,7 @@ public class SDGridLayout extends ViewGroup
 
         if (modeHeight != MeasureSpec.EXACTLY)
         {
-            sizeHeight = totalHeight;
+            sizeHeight = totalHeight + getPaddingTop() + getPaddingBottom();
         }
 
         setMeasuredDimension(sizeWidth, sizeHeight);
