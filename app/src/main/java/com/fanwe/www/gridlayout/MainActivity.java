@@ -1,6 +1,7 @@
 package com.fanwe.www.gridlayout;
 
 import android.os.Bundle;
+import android.widget.GridView;
 
 import com.fanwe.library.SDLibrary;
 import com.fanwe.library.activity.SDBaseActivity;
@@ -9,6 +10,7 @@ import com.fanwe.library.listener.SDSimpleIterateCallback;
 import com.fanwe.library.model.SelectableModel;
 import com.fanwe.library.utils.SDCollectionUtil;
 import com.fanwe.www.gridlayout.adapter.ListViewAdapter;
+import com.fanwe.www.gridlayout.adapter.ListViewListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,29 +18,30 @@ import java.util.List;
 public class MainActivity extends SDBaseActivity
 {
 
-    private SDGridLayout view_grid;
-    private List<SelectableModel> mListModel = new ArrayList<>();
+    private GridView view_grid;
 
     @Override
     protected void init(Bundle savedInstanceState)
     {
         SDLibrary.getInstance().init(getApplication());
         setContentView(R.layout.activity_main);
-        view_grid = (SDGridLayout) findViewById(R.id.view_grid);
+        view_grid = (GridView) findViewById(R.id.view_grid);
+
+        final List<List<DataModel>> listModel = new ArrayList<>();
 
         SDCollectionUtil.foreach(30, new SDSimpleIterateCallback()
         {
             @Override
             public boolean next(int i)
             {
-                mListModel.add(new SelectableModel());
+                listModel.add(DataModel.get(10));
                 return false;
             }
         });
-        ListViewAdapter adapter = new ListViewAdapter(mListModel, this);
+        ListViewListAdapter adapter = new ListViewListAdapter(listModel, this);
 
 
-        view_grid.setNumColumns(7);
+        view_grid.setNumColumns(1);
         view_grid.setVerticalSpacing(10);
         view_grid.setHorizontalSpacing(10);
         view_grid.setAdapter(adapter);
