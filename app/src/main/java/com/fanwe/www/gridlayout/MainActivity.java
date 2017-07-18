@@ -26,7 +26,7 @@ public class MainActivity extends SDBaseActivity
         setContentView(R.layout.activity_main);
         view_grid = (SDGridLayout) findViewById(R.id.view_grid);
 
-        SDCollectionUtil.foreach(20, new SDSimpleIterateCallback()
+        SDCollectionUtil.foreach(30, new SDSimpleIterateCallback()
         {
             @Override
             public boolean next(int i)
@@ -38,7 +38,7 @@ public class MainActivity extends SDBaseActivity
         ListViewAdapter adapter = new ListViewAdapter(mListModel, this);
 
 
-        view_grid.setNumColumns(3);
+        view_grid.setNumColumns(7);
         view_grid.setVerticalSpacing(10);
         view_grid.setHorizontalSpacing(10);
         view_grid.setAdapter(adapter);
