@@ -395,7 +395,13 @@ public class SDGridLayout extends ViewGroup
         int cWidthMeasureSpec = 0;
         if (mOrientation == VERTICAL)
         {
-            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidth(sizeWidth), MeasureSpec.EXACTLY);
+            if (modeWidth == MeasureSpec.UNSPECIFIED)
+            {
+                cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(sizeWidth, MeasureSpec.UNSPECIFIED);
+            } else
+            {
+                cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidth(sizeWidth), MeasureSpec.EXACTLY);
+            }
         } else
         {
             cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(sizeWidth, MeasureSpec.UNSPECIFIED);
