@@ -1,46 +1,58 @@
 # GridLayout
 由于在某些场合确实需要在ScrollView中嵌套网格或者列表布局，但是原生的ListView和GridView不能和ScrollView嵌套，如果重写ListView和GridView的onMeasure方法会导致在布局复杂的情况下极其的消耗性能卡顿明显。<br>
-所以写了这个类，该类继承自ViewGroup实现的类似GridView的功能，方法名字和GridView保持一致，但是不包含布局重用机制。
+所以写了这个类，该类继承自ViewGroup，类似ReyclerView，支持水平方向和竖直方向布局，但是不包含布局重用机制。
 
 ## Gradle
-`compile 'com.fanwe.android:gridlayout:1.0.2'`
+`compile 'com.fanwe.android:gridlayout:1.0.3'`
 
 ## 效果图
-* 在ScrollView中<br>
-![](http://thumbsnap.com/s/zX46puTZ.png?0717)
-
-* 在GridView的Item中<br>
-![](http://thumbsnap.com/s/0TwOIbYZ.png?0717)
+![](http://thumbsnap.com/i/xnAK2Zp1.gif?0719)
 
 ## 使用
 1. xml布局
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <Button
+        android:id="@+id/btn_orientation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="50dp"
+        android:text="切换布局方向"/>
 
-        <com.fanwe.library.gridlayout.SDGridLayout
-            android:id="@+id/view_grid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/green"/>
+    <com.fanwe.library.gridlayout.SDGridLayout
+        android:id="@+id/view_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        android:padding="10dp"/>
 
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>
 ```
 2. java代码
 ```java
-ListViewAdapter adapter = new ListViewAdapter(DataModel.get(100), this);
-
-view_grid.setNumColumns(3); //设置列数
+view_grid.setSpanCount(3); //设置列数
 view_grid.setVerticalSpacing(10); //设置竖直方向的Item间隔
 view_grid.setHorizontalSpacing(10); //设置水平方向的Item间隔
 view_grid.setAdapter(adapter); //设置适配器绑定数据
+
+findViewById(R.id.btn_orientation).setOnClickListener(new View.OnClickListener()
+{
+    @Override
+    public void onClick(View v)
+    {
+        if (view_grid.getOrientation() == SDGridLayout.HORIZONTAL)
+        {
+            view_grid.setOrientation(SDGridLayout.VERTICAL); //设置竖直方向布局（默认竖直方向）
+        } else
+        {
+            view_grid.setOrientation(SDGridLayout.HORIZONTAL); //设置水平方向布局
+        }
+        view_grid.requestLayout(); //重新布局
+    }
+});
 ```
