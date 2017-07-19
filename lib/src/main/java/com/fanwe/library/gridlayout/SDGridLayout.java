@@ -387,26 +387,26 @@ public class SDGridLayout extends ViewGroup
         mArrRowHeight.clear();
         mArrColumnWidth.clear();
 
-        int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
-        int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
-        int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
-        int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 
         int cWidthMeasureSpec = 0;
         if (mOrientation == VERTICAL)
         {
-            if (modeWidth == MeasureSpec.UNSPECIFIED)
+            if (widthMode == MeasureSpec.UNSPECIFIED)
             {
-                cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(sizeWidth, MeasureSpec.UNSPECIFIED);
+                cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(widthSize, MeasureSpec.UNSPECIFIED);
             } else
             {
-                cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidth(sizeWidth), MeasureSpec.EXACTLY);
+                cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidth(widthSize), MeasureSpec.EXACTLY);
             }
         } else
         {
-            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(sizeWidth, MeasureSpec.UNSPECIFIED);
+            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(widthSize, MeasureSpec.UNSPECIFIED);
         }
-        int cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(sizeHeight, MeasureSpec.UNSPECIFIED);
+        int cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.UNSPECIFIED);
 
         int row = 0;
         int col = 0;
@@ -426,16 +426,24 @@ public class SDGridLayout extends ViewGroup
             saveColumnWidthIfNeed(col, child.getMeasuredWidth());
         }
 
-        if (modeWidth != MeasureSpec.EXACTLY)
+        switch (widthMode)
         {
-            sizeWidth = getTotalWidth();
-        }
-        if (modeHeight != MeasureSpec.EXACTLY)
-        {
-            sizeHeight = getTotalHeight();
+            case MeasureSpec.AT_MOST:
+                widthSize = Math.max(widthSize, getTotalWidth());
+                break;
+            case MeasureSpec.EXACTLY:
+                break;
+            case MeasureSpec.UNSPECIFIED:
+                widthSize = getTotalWidth();
+                break;
         }
 
-        setMeasuredDimension(sizeWidth, sizeHeight);
+        if (heightMode != MeasureSpec.EXACTLY)
+        {
+            heightSize = getTotalHeight();
+        }
+
+        setMeasuredDimension(widthSize, heightSize);
     }
 
 
