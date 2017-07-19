@@ -75,11 +75,7 @@ public class SDGridLayout extends ViewGroup
     {
         if (orientation == VERTICAL || orientation == HORIZONTAL)
         {
-            if (mOrientation != orientation)
-            {
-                mOrientation = orientation;
-                requestLayout();
-            }
+            mOrientation = orientation;
         } else
         {
             throw new IllegalArgumentException("orientation must be SDGridLayout.VERTICAL or SDGridLayout.HORIZONTAL");
@@ -105,10 +101,11 @@ public class SDGridLayout extends ViewGroup
      */
     public void setSpanCount(int spanCount)
     {
-        if (mSpanCount != spanCount)
+        if (spanCount < 1)
         {
-            mSpanCount = spanCount;
+            spanCount = 1;
         }
+        mSpanCount = spanCount;
     }
 
     /**
@@ -128,10 +125,7 @@ public class SDGridLayout extends ViewGroup
      */
     public void setHorizontalSpacing(int horizontalSpacing)
     {
-        if (mHorizontalSpacing != horizontalSpacing)
-        {
-            mHorizontalSpacing = horizontalSpacing;
-        }
+        mHorizontalSpacing = horizontalSpacing;
     }
 
     /**
@@ -141,10 +135,7 @@ public class SDGridLayout extends ViewGroup
      */
     public void setVerticalSpacing(int verticalSpacing)
     {
-        if (mVerticalSpacing != verticalSpacing)
-        {
-            mVerticalSpacing = verticalSpacing;
-        }
+        mVerticalSpacing = verticalSpacing;
     }
 
     /**
