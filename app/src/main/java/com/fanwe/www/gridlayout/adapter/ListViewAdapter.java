@@ -3,6 +3,7 @@ package com.fanwe.www.gridlayout.adapter;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.fanwe.library.adapter.SDSimpleAdapter;
 import com.fanwe.www.gridlayout.DataModel;
@@ -30,6 +31,9 @@ public class ListViewAdapter extends SDSimpleAdapter<DataModel>
     @Override
     public void bindData(int position, View convertView, ViewGroup parent, DataModel model)
     {
+        TextView tv_position = get(R.id.tv_position, convertView);
+        tv_position.setText(String.valueOf(position));
+
 //        if (position % 2 == 0)
 //        {
 //            convertView.setLayoutParams(new ViewGroup.LayoutParams(-1, 100));

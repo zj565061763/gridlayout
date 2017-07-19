@@ -29,8 +29,12 @@ public class SDGridLayout extends ViewGroup
         super(context, attrs, defStyleAttr);
     }
 
+    public static final int HORIZONTAL = 0;
+    public static final int VERTICAL = 1;
+
     private SparseArray<Integer> mArrRowHeight = new SparseArray<>();
 
+    private int mOrientation = HORIZONTAL;
     /**
      * 列数
      */
@@ -143,16 +147,39 @@ public class SDGridLayout extends ViewGroup
 
     private int getColumnIndex(int childIndex)
     {
-        return childIndex % mNumColumns;
+        if (mOrientation == VERTICAL)
+        {
+            return childIndex % mNumColumns;
+        } else
+        {
+            return childIndex / mNumColumns;
+        }
     }
 
     private int getRowIndex(int childIndex)
     {
-        return childIndex / mNumColumns;
+        if (mOrientation == VERTICAL)
+        {
+            return childIndex / mNumColumns;
+        } else
+        {
+            return childIndex % mNumColumns;
+        }
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
+    {
+        if (mOrientation == VERTICAL)
+        {
+            onMeasureVertical(widthMeasureSpec, heightMeasureSpec);
+        } else
+        {
+            onMeasureHorizontal(widthMeasureSpec, heightMeasureSpec);
+        }
+    }
+
+    private void onMeasureVertical(int widthMeasureSpec, int heightMeasureSpec)
     {
         int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
         int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
@@ -207,8 +234,118 @@ public class SDGridLayout extends ViewGroup
         setMeasuredDimension(sizeWidth, sizeHeight);
     }
 
+    private boolean saveRowHeightIfNeed(int row, int childHeight)
+    {
+        Integer oldHeight = mArrRowHeight.get(row);
+        if (oldHeight == null)
+        {
+            mArrRowHeight.put(row, childHeight);
+            return true;
+        } else
+        {
+            if (childHeight > oldHeight)
+            {
+                mArrRowHeight.put(row, childHeight);
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+    }
+
+    /**
+     * 返回一共有几行
+     *
+     * @return
+     */
+    private int getRowCount()
+    {
+        if (mOrientation == VERTICAL)
+        {
+            int div = getChildCount() / mNumColumns;
+            if (getChildCount() % mNumColumns == 0)
+            {
+                return div;
+            } else
+            {
+                return div + 1;
+            }
+        } else
+        {
+            return mNumColumns;
+        }
+    }
+
+    /**
+     * 返回总的高度
+     *
+     * @return
+     */
+    private int getTotalHeight()
+    {
+        int height = getPaddingTop() + getPaddingBottom();
+
+        int rowCount = getRowCount();
+        if (rowCount > 0)
+        {
+            for (int i = 0; i < rowCount; i++)
+            {
+                height += mArrRowHeight.get(i);
+                if (i < rowCount - 1)
+                {
+                    height += mHorizontalSpacing;
+                }
+            }
+        }
+        return height;
+    }
+
+    private void onMeasureHorizontal(int widthMeasureSpec, int heightMeasureSpec)
+    {
+        int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
+        int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
+        int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
+        int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
+
+        int cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(sizeWidth, MeasureSpec.UNSPECIFIED);
+        int cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(sizeHeight, MeasureSpec.UNSPECIFIED);
+        int row = 0;
+        int count = getChildCount();
+        for (int i = 0; i < count; i++)
+        {
+            row = getRowIndex(i);
+
+            View child = getChildAt(i);
+            LayoutParams params = child.getLayoutParams();
+            cWidthMeasureSpec = getChildMeasureSpec(cWidthMeasureSpec, 0, params.width);
+            cHeightMeasureSpec = getChildMeasureSpec(cHeightMeasureSpec, 0, params.height);
+            child.measure(cWidthMeasureSpec, cHeightMeasureSpec);
+
+            saveRowHeightIfNeed(row, child.getMeasuredHeight());
+        }
+
+        if (modeHeight != MeasureSpec.EXACTLY)
+        {
+            sizeHeight = getTotalHeight();
+        }
+
+        setMeasuredDimension(sizeWidth, sizeHeight);
+    }
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b)
+    {
+        if (mOrientation == VERTICAL)
+        {
+            onLayoutVertical(changed, l, t, r, b);
+        } else
+        {
+            onLayoutHorizontal(changed, l, t, r, b);
+        }
+    }
+
+    private void onLayoutVertical(boolean changed, int l, int t, int r, int b)
     {
         int col = 0;
         int row = 0;
@@ -243,6 +380,45 @@ public class SDGridLayout extends ViewGroup
             {
                 //下一行的top
                 top += rowHeight + mHorizontalSpacing;
+            }
+        }
+    }
+
+    private void onLayoutHorizontal(boolean changed, int l, int t, int r, int b)
+    {
+        int col = 0;
+        int row = 0;
+        int rowHeight = 0;
+        int left = 0;
+        int top = 0;
+        int count = getChildCount();
+        for (int i = 0; i < count; i++)
+        {
+            col = getColumnIndex(i);
+            row = getRowIndex(i);
+            rowHeight = mArrRowHeight.get(row);
+
+            View child = getChildAt(i);
+            if (col == 0)
+            {
+                left = getPaddingLeft();
+            }
+            if (row == 0)
+            {
+                top = getPaddingTop();
+            }
+
+            int right = left + child.getMeasuredWidth();
+            int bottom = top + child.getMeasuredHeight();
+
+            child.layout(left, top, right, bottom);
+
+            //下一行的top
+            top += rowHeight + mHorizontalSpacing;
+            if (row + 1 == mNumColumns)
+            {
+                //下一列的left
+                left = right + mVerticalSpacing;
             }
         }
     }
