@@ -411,16 +411,9 @@ public class SDGridLayout extends ViewGroup
             saveColumnWidthIfNeed(col, child.getMeasuredWidth());
         }
 
-        switch (widthMode)
+        if (widthMode != MeasureSpec.EXACTLY)
         {
-            case MeasureSpec.AT_MOST:
-                widthSize = Math.max(widthSize, getTotalWidth());
-                break;
-            case MeasureSpec.EXACTLY:
-                break;
-            case MeasureSpec.UNSPECIFIED:
-                widthSize = getTotalWidth();
-                break;
+            widthSize = getTotalWidth();
         }
 
         if (heightMode != MeasureSpec.EXACTLY)
