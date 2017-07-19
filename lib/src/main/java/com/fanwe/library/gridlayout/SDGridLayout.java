@@ -207,6 +207,29 @@ public class SDGridLayout extends ViewGroup
         }
     }
 
+    /**
+     * 返回一共有几行
+     *
+     * @return
+     */
+    private int getRowCount()
+    {
+        if (mOrientation == VERTICAL)
+        {
+            int div = getChildCount() / mSpanCount;
+            if (getChildCount() % mSpanCount == 0)
+            {
+                return div;
+            } else
+            {
+                return div + 1;
+            }
+        } else
+        {
+            return mSpanCount;
+        }
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
@@ -264,29 +287,6 @@ public class SDGridLayout extends ViewGroup
             {
                 return false;
             }
-        }
-    }
-
-    /**
-     * 返回一共有几行
-     *
-     * @return
-     */
-    private int getRowCount()
-    {
-        if (mOrientation == VERTICAL)
-        {
-            int div = getChildCount() / mSpanCount;
-            if (getChildCount() % mSpanCount == 0)
-            {
-                return div;
-            } else
-            {
-                return div + 1;
-            }
-        } else
-        {
-            return mSpanCount;
         }
     }
 
