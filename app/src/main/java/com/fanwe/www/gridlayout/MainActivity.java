@@ -1,6 +1,7 @@
 package com.fanwe.www.gridlayout;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.fanwe.library.SDLibrary;
 import com.fanwe.library.activity.SDBaseActivity;
@@ -26,5 +27,21 @@ public class MainActivity extends SDBaseActivity
         view_grid.setVerticalSpacing(10); //设置竖直方向的Item间隔
         view_grid.setHorizontalSpacing(10); //设置水平方向的Item间隔
         view_grid.setAdapter(adapter); //设置适配器绑定数据
+
+
+        findViewById(R.id.btn_orientation).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (view_grid.getOrientation() == SDGridLayout.HORIZONTAL)
+                {
+                    view_grid.setOrientation(SDGridLayout.VERTICAL);
+                } else
+                {
+                    view_grid.setOrientation(SDGridLayout.HORIZONTAL);
+                }
+            }
+        });
     }
 }

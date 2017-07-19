@@ -69,7 +69,29 @@ public class SDGridLayout extends ViewGroup
      */
     public void setOrientation(int orientation)
     {
-        mOrientation = orientation;
+        if (orientation == VERTICAL || orientation == HORIZONTAL)
+        {
+            if (mOrientation != orientation)
+            {
+                mOrientation = orientation;
+                requestLayout();
+            }
+        } else
+        {
+            throw new IllegalArgumentException("orientation must be SDGridLayout.VERTICAL or SDGridLayout.HORIZONTAL");
+        }
+    }
+
+    /**
+     * 返回布局方向<br>
+     * {@link #VERTICAL}<br>
+     * {@link #HORIZONTAL}
+     *
+     * @return
+     */
+    public int getOrientation()
+    {
+        return mOrientation;
     }
 
     /**
@@ -83,6 +105,16 @@ public class SDGridLayout extends ViewGroup
         {
             mSpanCount = spanCount;
         }
+    }
+
+    /**
+     * 返回行或者列的网格数量
+     *
+     * @return
+     */
+    public int getSpanCount()
+    {
+        return mSpanCount;
     }
 
     /**
@@ -317,28 +349,16 @@ public class SDGridLayout extends ViewGroup
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b)
     {
-        if (mOrientation == VERTICAL)
-        {
-            onLayoutVertical(changed, l, t, r, b);
-        } else
-        {
-            onLayoutHorizontal(changed, l, t, r, b);
-        }
-    }
-
-    private void onLayoutVertical(boolean changed, int l, int t, int r, int b)
-    {
         int col = 0;
         int row = 0;
-        int rowHeight = 0;
         int left = 0;
         int top = 0;
+
         int count = getChildCount();
         for (int i = 0; i < count; i++)
         {
             col = getColumnIndex(i);
             row = getRowIndex(i);
-            rowHeight = mArrRowHeight.get(row);
 
             View child = getChildAt(i);
             if (col == 0)
@@ -355,15 +375,28 @@ public class SDGridLayout extends ViewGroup
 
             child.layout(left, top, right, bottom);
 
-            //下一列的left
-            left = right + mVerticalSpacing;
-            if (col + 1 == mSpanCount)
+            if (mOrientation == VERTICAL)
+            {
+                //下一列的left
+                left = right + mVerticalSpacing;
+                if (col + 1 == mSpanCount)
+                {
+                    //下一行的top
+                    top += mArrRowHeight.get(row) + mHorizontalSpacing;
+                }
+            } else
             {
                 //下一行的top
-                top += rowHeight + mHorizontalSpacing;
+                top += mArrRowHeight.get(row) + mHorizontalSpacing;
+                if (row + 1 == mSpanCount)
+                {
+                    //下一列的left
+                    left = right + mVerticalSpacing;
+                }
             }
         }
     }
+
 
     private void onLayoutHorizontal(boolean changed, int l, int t, int r, int b)
     {
