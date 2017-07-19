@@ -1,6 +1,7 @@
 package com.fanwe.www.gridlayout;
 
 import android.os.Bundle;
+import android.widget.GridView;
 
 import com.fanwe.library.SDLibrary;
 import com.fanwe.library.activity.SDBaseActivity;

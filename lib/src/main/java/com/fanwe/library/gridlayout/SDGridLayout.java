@@ -135,7 +135,9 @@ public class SDGridLayout extends ViewGroup
 
     private int getColumnWidth(int parentWidth)
     {
-        final int colWidth = (int) (((parentWidth - ((mNumColumns - 1) * mVerticalSpacing) - getPaddingLeft() - getPaddingRight()) / (float) mNumColumns) + 0.5f);
+        int width = parentWidth - ((mNumColumns - 1) * mVerticalSpacing);
+        width -= getPaddingLeft() + getPaddingRight();
+        int colWidth = (int) (width / (float) mNumColumns + 0.5f);
         return colWidth;
     }
 
@@ -172,15 +174,16 @@ public class SDGridLayout extends ViewGroup
             {
                 //新一行
                 mArrRowHeight.put(tempRow, rowHeight);
-                totalHeight = totalHeight + rowHeight + mHorizontalSpacing;
+                totalHeight += rowHeight + mHorizontalSpacing;
 
                 rowHeight = 0;
             }
 
             View child = getChildAt(i);
-            ViewGroup.LayoutParams params = child.getLayoutParams();
+            LayoutParams params = child.getLayoutParams();
+            cWidthMeasureSpec = getChildMeasureSpec(cWidthMeasureSpec, 0, params.width);
             cHeightMeasureSpec = getChildMeasureSpec(cHeightMeasureSpec, 0, params.height);
-            measureChild(child, cWidthMeasureSpec, cHeightMeasureSpec);
+            child.measure(cWidthMeasureSpec, cHeightMeasureSpec);
 
             if (child.getMeasuredHeight() > rowHeight)
             {
@@ -207,7 +210,6 @@ public class SDGridLayout extends ViewGroup
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b)
     {
-        int colWidth = getColumnWidth(getWidth());
         int col = 0;
         int row = 0;
         int left = 0;
@@ -228,7 +230,7 @@ public class SDGridLayout extends ViewGroup
                 top = getPaddingTop();
             }
 
-            int right = left + colWidth;
+            int right = left + child.getMeasuredWidth();
             int bottom = top + mArrRowHeight.get(row);
 
             child.layout(left, top, right, bottom);
