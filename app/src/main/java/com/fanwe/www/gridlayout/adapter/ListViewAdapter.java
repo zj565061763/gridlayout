@@ -30,12 +30,12 @@ public class ListViewAdapter extends SDSimpleAdapter<DataModel>
     @Override
     public void bindData(int position, View convertView, ViewGroup parent, DataModel model)
     {
-        if (position % 2 == 0)
-        {
-            convertView.setLayoutParams(new ViewGroup.LayoutParams(-1, 100));
-        } else
-        {
-            convertView.setLayoutParams(new ViewGroup.LayoutParams(-1, 300));
-        }
+//        if (position % 2 == 0)
+//        {
+//            convertView.setLayoutParams(new ViewGroup.LayoutParams(-1, 100));
+//        } else
+//        {
+//            convertView.setLayoutParams(new ViewGroup.LayoutParams(-1, 300));
+//        }
     }
 }
