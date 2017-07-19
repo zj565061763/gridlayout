@@ -29,11 +29,21 @@ public class SDGridLayout extends ViewGroup
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * 水平布局方向
+     */
     public static final int HORIZONTAL = 0;
+    /**
+     * 竖直布局方向
+     */
     public static final int VERTICAL = 1;
-
+    /**
+     * 保存每一行的最高高度，key：行，value：高度
+     */
     private SparseArray<Integer> mArrRowHeight = new SparseArray<>();
-
+    /**
+     * 布局方向
+     */
     private int mOrientation = VERTICAL;
     /**
      * 行或者列的网格数量
