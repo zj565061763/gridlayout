@@ -35,7 +35,7 @@
 ```
 2. java代码
 ```java
-view_grid.setSpanCount(3); //设置列数
+view_grid.setSpanCount(3); //设置行或者列的网格数量
 view_grid.setVerticalSpacing(10); //设置竖直方向的Item间隔
 view_grid.setHorizontalSpacing(10); //设置水平方向的Item间隔
 view_grid.setAdapter(adapter); //设置适配器绑定数据
