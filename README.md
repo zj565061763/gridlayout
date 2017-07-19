@@ -2,6 +2,9 @@
 由于在某些场合确实需要在ScrollView中嵌套网格或者列表布局，但是原生的ListView和GridView不能和ScrollView嵌套，如果重写ListView和GridView的onMeasure方法会导致在布局复杂的情况下极其的消耗性能卡顿明显。<br>
 所以写了这个类，该类继承自ViewGroup实现的类似GridView的功能，方法名字和GridView保持一致，但是不包含布局重用机制。
 
+## Gradle
+`compile 'com.fanwe.android:gridlayout:1.0.2'`
+
 ## 效果图
 * 在ScrollView中<br>
 ![](http://thumbsnap.com/s/zX46puTZ.png?0717)
