@@ -231,7 +231,7 @@ public class SDGridLayout extends ViewGroup
             }
 
             int right = left + child.getMeasuredWidth();
-            int bottom = top + mArrRowHeight.get(row);
+            int bottom = top + child.getMeasuredHeight();
 
             child.layout(left, top, right, bottom);
 
@@ -240,7 +240,7 @@ public class SDGridLayout extends ViewGroup
             if (col + 1 == mNumColumns)
             {
                 //下一行的top
-                top = bottom + mHorizontalSpacing;
+                top += mArrRowHeight.get(row) + mHorizontalSpacing;
             }
         }
     }

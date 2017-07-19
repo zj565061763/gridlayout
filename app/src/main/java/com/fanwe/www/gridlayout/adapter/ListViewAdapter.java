@@ -31,13 +31,13 @@ public class ListViewAdapter extends SDSimpleAdapter<DataModel>
     public void bindData(int position, View convertView, ViewGroup parent, DataModel model)
     {
 //        convertView.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
-
+//
 //        if (position % 2 == 0)
 //        {
 //            SDViewUtil.setHeight(convertView, 100);
 //        } else
 //        {
-//            SDViewUtil.setHeight(convertView, 200);
+//            SDViewUtil.setHeight(convertView, 300);
 //        }
     }
 }
