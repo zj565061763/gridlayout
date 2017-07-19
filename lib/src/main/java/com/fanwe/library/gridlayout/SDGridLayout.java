@@ -212,6 +212,7 @@ public class SDGridLayout extends ViewGroup
     {
         int col = 0;
         int row = 0;
+        int rowHeight = 0;
         int left = 0;
         int top = 0;
         int count = getChildCount();
@@ -219,6 +220,7 @@ public class SDGridLayout extends ViewGroup
         {
             col = getColumnIndex(i);
             row = getRowIndex(i);
+            rowHeight = mArrRowHeight.get(row);
 
             View child = getChildAt(i);
             if (col == 0)
@@ -240,7 +242,7 @@ public class SDGridLayout extends ViewGroup
             if (col + 1 == mNumColumns)
             {
                 //下一行的top
-                top += mArrRowHeight.get(row) + mHorizontalSpacing;
+                top += rowHeight + mHorizontalSpacing;
             }
         }
     }
