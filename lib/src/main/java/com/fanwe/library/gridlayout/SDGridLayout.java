@@ -51,7 +51,7 @@ public class SDGridLayout extends ViewGroup
     private BaseAdapter mAdapter;
 
     /**
-     * 设置布局方向<br>
+     * 设置布局方向，默认竖直方向<br>
      * {@link #VERTICAL}<br>
      * {@link #HORIZONTAL}
      *
