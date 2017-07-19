@@ -9,7 +9,7 @@
         android:id="@+id/btn_orientation"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="切换方向"/>
+        android:text="切换布局方向"/>
 
     <com.fanwe.library.gridlayout.SDGridLayout
         android:id="@+id/view_grid"
