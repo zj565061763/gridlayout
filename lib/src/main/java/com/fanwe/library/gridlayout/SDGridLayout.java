@@ -38,9 +38,13 @@ public class SDGridLayout extends ViewGroup
      */
     public static final int VERTICAL = 1;
     /**
-     * 保存每一行的最高高度，key：行，value：高度
+     * 保存每一行的最大高度，key：行，value：高度
      */
     private SparseArray<Integer> mArrRowHeight = new SparseArray<>();
+    /**
+     * 保存每一列的最大宽度，key：列，value：宽度
+     */
+    private SparseArray<Integer> mArrColumnWidth = new SparseArray<>();
     /**
      * 布局方向
      */
@@ -191,6 +195,8 @@ public class SDGridLayout extends ViewGroup
         }
     }
 
+    //----------help method start----------
+
     /**
      * 返回VERTICAL方向下，列的宽度
      *
@@ -203,23 +209,6 @@ public class SDGridLayout extends ViewGroup
         width -= getPaddingLeft() + getPaddingRight();
         int colWidth = (int) (width / (float) mSpanCount + 0.5f);
         return colWidth;
-    }
-
-    /**
-     * 返回child所在的列
-     *
-     * @param childIndex
-     * @return
-     */
-    private int getColumnIndex(int childIndex)
-    {
-        if (mOrientation == VERTICAL)
-        {
-            return childIndex % mSpanCount;
-        } else
-        {
-            return childIndex / mSpanCount;
-        }
     }
 
     /**
@@ -236,6 +225,23 @@ public class SDGridLayout extends ViewGroup
         } else
         {
             return childIndex % mSpanCount;
+        }
+    }
+
+    /**
+     * 返回child所在的列
+     *
+     * @param childIndex
+     * @return
+     */
+    private int getColumnIndex(int childIndex)
+    {
+        if (mOrientation == VERTICAL)
+        {
+            return childIndex % mSpanCount;
+        } else
+        {
+            return childIndex / mSpanCount;
         }
     }
 
@@ -263,32 +269,124 @@ public class SDGridLayout extends ViewGroup
     }
 
     /**
+     * 返回一共有几列
+     *
+     * @return
+     */
+    private int getColumnCount()
+    {
+        if (mOrientation == VERTICAL)
+        {
+            return mSpanCount;
+        } else
+        {
+            int div = getChildCount() / mSpanCount;
+            if (getChildCount() % mSpanCount == 0)
+            {
+                return div;
+            } else
+            {
+                return div + 1;
+            }
+        }
+    }
+
+    /**
+     * 返回总的宽度
+     *
+     * @return
+     */
+    private int getTotalWidth()
+    {
+        int value = getPaddingLeft() + getPaddingRight();
+
+        int count = getColumnCount();
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                value += mArrColumnWidth.get(i);
+                if (i < count - 1)
+                {
+                    value += mVerticalSpacing;
+                }
+            }
+        }
+        return value;
+    }
+
+    /**
      * 返回总的高度
      *
      * @return
      */
     private int getTotalHeight()
     {
-        int height = getPaddingTop() + getPaddingBottom();
+        int value = getPaddingTop() + getPaddingBottom();
 
-        int rowCount = getRowCount();
-        if (rowCount > 0)
+        int count = getRowCount();
+        if (count > 0)
         {
-            for (int i = 0; i < rowCount; i++)
+            for (int i = 0; i < count; i++)
             {
-                height += mArrRowHeight.get(i);
-                if (i < rowCount - 1)
+                value += mArrRowHeight.get(i);
+                if (i < count - 1)
                 {
-                    height += mHorizontalSpacing;
+                    value += mHorizontalSpacing;
                 }
             }
         }
-        return height;
+        return value;
     }
+
+    private boolean saveRowHeightIfNeed(int row, int childHeight)
+    {
+        Integer oldValue = mArrRowHeight.get(row);
+        if (oldValue == null)
+        {
+            mArrRowHeight.put(row, childHeight);
+            return true;
+        } else
+        {
+            if (childHeight > oldValue)
+            {
+                mArrRowHeight.put(row, childHeight);
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+    }
+
+    private boolean saveColumnWidthIfNeed(int column, int childWidth)
+    {
+        Integer oldValue = mArrColumnWidth.get(column);
+        if (oldValue == null)
+        {
+            mArrColumnWidth.put(column, childWidth);
+            return true;
+        } else
+        {
+            if (childWidth > oldValue)
+            {
+                mArrColumnWidth.put(column, childWidth);
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+    }
+
+    //----------help method end----------
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
+        mArrRowHeight.clear();
+        mArrColumnWidth.clear();
+
         int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
         int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
         int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
@@ -303,11 +401,14 @@ public class SDGridLayout extends ViewGroup
             cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(sizeWidth, MeasureSpec.UNSPECIFIED);
         }
         int cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(sizeHeight, MeasureSpec.UNSPECIFIED);
-        int count = getChildCount();
+
         int row = 0;
+        int col = 0;
+        int count = getChildCount();
         for (int i = 0; i < count; i++)
         {
             row = getRowIndex(i);
+            col = getColumnIndex(i);
 
             View child = getChildAt(i);
             LayoutParams params = child.getLayoutParams();
@@ -316,8 +417,13 @@ public class SDGridLayout extends ViewGroup
             child.measure(cWidthMeasureSpec, cHeightMeasureSpec);
 
             saveRowHeightIfNeed(row, child.getMeasuredHeight());
+            saveColumnWidthIfNeed(col, child.getMeasuredWidth());
         }
 
+        if (modeWidth != MeasureSpec.EXACTLY)
+        {
+            sizeWidth = getTotalWidth();
+        }
         if (modeHeight != MeasureSpec.EXACTLY)
         {
             sizeHeight = getTotalHeight();
@@ -326,48 +432,29 @@ public class SDGridLayout extends ViewGroup
         setMeasuredDimension(sizeWidth, sizeHeight);
     }
 
-    private boolean saveRowHeightIfNeed(int row, int childHeight)
-    {
-        Integer oldHeight = mArrRowHeight.get(row);
-        if (oldHeight == null)
-        {
-            mArrRowHeight.put(row, childHeight);
-            return true;
-        } else
-        {
-            if (childHeight > oldHeight)
-            {
-                mArrRowHeight.put(row, childHeight);
-                return true;
-            } else
-            {
-                return false;
-            }
-        }
-    }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b)
     {
-        int col = 0;
         int row = 0;
+        int col = 0;
         int left = 0;
         int top = 0;
 
         int count = getChildCount();
         for (int i = 0; i < count; i++)
         {
-            col = getColumnIndex(i);
             row = getRowIndex(i);
+            col = getColumnIndex(i);
 
             View child = getChildAt(i);
-            if (col == 0)
-            {
-                left = getPaddingLeft();
-            }
             if (row == 0)
             {
                 top = getPaddingTop();
+            }
+            if (col == 0)
+            {
+                left = getPaddingLeft();
             }
 
             int right = left + child.getMeasuredWidth();
