@@ -27,7 +27,6 @@ public class MainActivity extends SDBaseActivity
         view_grid.setHorizontalSpacing(10); //设置水平方向的Item间隔
         view_grid.setAdapter(adapter); //设置适配器绑定数据
 
-
         findViewById(R.id.btn_orientation).setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -35,12 +34,12 @@ public class MainActivity extends SDBaseActivity
             {
                 if (view_grid.getOrientation() == SDGridLayout.HORIZONTAL)
                 {
-                    view_grid.setOrientation(SDGridLayout.VERTICAL);
+                    view_grid.setOrientation(SDGridLayout.VERTICAL); //设置竖直方向布局
                 } else
                 {
-                    view_grid.setOrientation(SDGridLayout.HORIZONTAL);
+                    view_grid.setOrientation(SDGridLayout.HORIZONTAL); //设置水平方向布局
                 }
-                view_grid.requestLayout();
+                view_grid.requestLayout(); //重新布局
             }
         });
     }
