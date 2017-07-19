@@ -1,7 +1,6 @@
 package com.fanwe.www.gridlayout;
 
 import android.os.Bundle;
-import android.widget.GridView;
 
 import com.fanwe.library.SDLibrary;
 import com.fanwe.library.activity.SDBaseActivity;
@@ -22,7 +21,7 @@ public class MainActivity extends SDBaseActivity
 
         ListViewAdapter adapter = new ListViewAdapter(DataModel.get(10), this);
 
-        view_grid.setNumColumns(3); //设置列数
+        view_grid.setSpanCount(3); //设置列数
         view_grid.setVerticalSpacing(10); //设置竖直方向的Item间隔
         view_grid.setHorizontalSpacing(10); //设置水平方向的Item间隔
         view_grid.setAdapter(adapter); //设置适配器绑定数据
