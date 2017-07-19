@@ -262,6 +262,30 @@ public class SDGridLayout extends ViewGroup
         }
     }
 
+    /**
+     * 返回总的高度
+     *
+     * @return
+     */
+    private int getTotalHeight()
+    {
+        int height = getPaddingTop() + getPaddingBottom();
+
+        int rowCount = getRowCount();
+        if (rowCount > 0)
+        {
+            for (int i = 0; i < rowCount; i++)
+            {
+                height += mArrRowHeight.get(i);
+                if (i < rowCount - 1)
+                {
+                    height += mHorizontalSpacing;
+                }
+            }
+        }
+        return height;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
@@ -322,30 +346,6 @@ public class SDGridLayout extends ViewGroup
         }
     }
 
-    /**
-     * 返回总的高度
-     *
-     * @return
-     */
-    private int getTotalHeight()
-    {
-        int height = getPaddingTop() + getPaddingBottom();
-
-        int rowCount = getRowCount();
-        if (rowCount > 0)
-        {
-            for (int i = 0; i < rowCount; i++)
-            {
-                height += mArrRowHeight.get(i);
-                if (i < rowCount - 1)
-                {
-                    height += mHorizontalSpacing;
-                }
-            }
-        }
-        return height;
-    }
-
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b)
     {
@@ -393,46 +393,6 @@ public class SDGridLayout extends ViewGroup
                     //下一列的left
                     left = right + mVerticalSpacing;
                 }
-            }
-        }
-    }
-
-
-    private void onLayoutHorizontal(boolean changed, int l, int t, int r, int b)
-    {
-        int col = 0;
-        int row = 0;
-        int rowHeight = 0;
-        int left = 0;
-        int top = 0;
-        int count = getChildCount();
-        for (int i = 0; i < count; i++)
-        {
-            col = getColumnIndex(i);
-            row = getRowIndex(i);
-            rowHeight = mArrRowHeight.get(row);
-
-            View child = getChildAt(i);
-            if (col == 0)
-            {
-                left = getPaddingLeft();
-            }
-            if (row == 0)
-            {
-                top = getPaddingTop();
-            }
-
-            int right = left + child.getMeasuredWidth();
-            int bottom = top + child.getMeasuredHeight();
-
-            child.layout(left, top, right, bottom);
-
-            //下一行的top
-            top += rowHeight + mHorizontalSpacing;
-            if (row + 1 == mSpanCount)
-            {
-                //下一列的left
-                left = right + mVerticalSpacing;
             }
         }
     }
