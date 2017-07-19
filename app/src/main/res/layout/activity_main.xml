@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/green"
-        android:paddingLeft="50dp"/>
+        android:padding="20dp"/>
 
     <View
         android:layout_width="match_parent"
