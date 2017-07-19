@@ -424,7 +424,6 @@ public class SDGridLayout extends ViewGroup
         setMeasuredDimension(widthSize, heightSize);
     }
 
-
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b)
     {

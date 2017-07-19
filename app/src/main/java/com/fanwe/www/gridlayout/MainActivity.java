@@ -34,7 +34,7 @@ public class MainActivity extends SDBaseActivity
             {
                 if (view_grid.getOrientation() == SDGridLayout.HORIZONTAL)
                 {
-                    view_grid.setOrientation(SDGridLayout.VERTICAL); //设置竖直方向布局
+                    view_grid.setOrientation(SDGridLayout.VERTICAL); //设置竖直方向布局（默认竖直方向）
                 } else
                 {
                     view_grid.setOrientation(SDGridLayout.HORIZONTAL); //设置水平方向布局
