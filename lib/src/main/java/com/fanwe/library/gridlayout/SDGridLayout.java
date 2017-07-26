@@ -379,9 +379,10 @@ public class SDGridLayout extends ViewGroup
         mArrColumnWidth.clear();
 
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 
         int cWidthMeasureSpec = 0;
         if (mOrientation == VERTICAL && widthMode != MeasureSpec.UNSPECIFIED)
@@ -391,18 +392,18 @@ public class SDGridLayout extends ViewGroup
         {
             cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(widthSize, MeasureSpec.UNSPECIFIED);
         }
-        int cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.UNSPECIFIED);
+        final int cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.UNSPECIFIED);
 
         int row = 0;
         int col = 0;
-        int count = getChildCount();
+        final int count = getChildCount();
         for (int i = 0; i < count; i++)
         {
             row = getRowIndex(i);
             col = getColumnIndex(i);
 
-            View child = getChildAt(i);
-            LayoutParams params = child.getLayoutParams();
+            final View child = getChildAt(i);
+            final LayoutParams params = child.getLayoutParams();
 
             child.measure(getChildMeasureSpec(cWidthMeasureSpec, 0, params.width),
                     getChildMeasureSpec(cHeightMeasureSpec, 0, params.height));
@@ -432,13 +433,13 @@ public class SDGridLayout extends ViewGroup
         int left = 0;
         int top = 0;
 
-        int count = getChildCount();
+        final int count = getChildCount();
         for (int i = 0; i < count; i++)
         {
             row = getRowIndex(i);
             col = getColumnIndex(i);
 
-            View child = getChildAt(i);
+            final View child = getChildAt(i);
             if (row == 0)
             {
                 top = getPaddingTop();
