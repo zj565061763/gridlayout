@@ -403,9 +403,9 @@ public class SDGridLayout extends ViewGroup
 
             View child = getChildAt(i);
             LayoutParams params = child.getLayoutParams();
-            cWidthMeasureSpec = getChildMeasureSpec(cWidthMeasureSpec, 0, params.width);
-            cHeightMeasureSpec = getChildMeasureSpec(cHeightMeasureSpec, 0, params.height);
-            child.measure(cWidthMeasureSpec, cHeightMeasureSpec);
+
+            child.measure(getChildMeasureSpec(cWidthMeasureSpec, 0, params.width),
+                    getChildMeasureSpec(cHeightMeasureSpec, 0, params.height));
 
             saveRowHeightIfNeed(row, child.getMeasuredHeight());
             saveColumnWidthIfNeed(col, child.getMeasuredWidth());
