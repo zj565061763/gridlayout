@@ -176,13 +176,11 @@ public class SDGridLayout extends ViewGroup
         }
 
         final int count = mAdapter.getCount();
+        View child = null;
         for (int i = 0; i < count; i++)
         {
-            View child = mAdapter.getView(i, null, this);
-            if (child != null)
-            {
-                addView(child);
-            }
+            child = mAdapter.getView(i, null, this);
+            addView(child);
         }
     }
 
