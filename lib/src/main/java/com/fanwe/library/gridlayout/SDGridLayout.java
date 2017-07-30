@@ -337,15 +337,12 @@ public class SDGridLayout extends ViewGroup
         int value = getPaddingLeft() + getPaddingRight();
 
         int count = getColumnCount();
-        if (count > 0)
+        for (int i = 0; i < count; i++)
         {
-            for (int i = 0; i < count; i++)
+            value += mArrColumnWidth.get(i);
+            if (i < count - 1)
             {
-                value += mArrColumnWidth.get(i);
-                if (i < count - 1)
-                {
-                    value += getVerticalSpacing();
-                }
+                value += getVerticalSpacing();
             }
         }
         return value;
@@ -361,15 +358,12 @@ public class SDGridLayout extends ViewGroup
         int value = getPaddingTop() + getPaddingBottom();
 
         int count = getRowCount();
-        if (count > 0)
+        for (int i = 0; i < count; i++)
         {
-            for (int i = 0; i < count; i++)
+            value += mArrRowHeight.get(i);
+            if (i < count - 1)
             {
-                value += mArrRowHeight.get(i);
-                if (i < count - 1)
-                {
-                    value += getHorizontalSpacing();
-                }
+                value += getHorizontalSpacing();
             }
         }
         return value;
@@ -430,14 +424,19 @@ public class SDGridLayout extends ViewGroup
         final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 
         int cWidthMeasureSpec = 0;
-        if (mOrientation == VERTICAL && widthMode != MeasureSpec.UNSPECIFIED)
+        int cHeightMeasureSpec = 0;
+
+        if (mOrientation == VERTICAL)
         {
-            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidth(widthSize), MeasureSpec.EXACTLY);
-        } else
-        {
-            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(widthSize, MeasureSpec.UNSPECIFIED);
+            if (widthMode == MeasureSpec.EXACTLY)
+            {
+                cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidth(widthSize), MeasureSpec.EXACTLY);
+            } else
+            {
+                cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(widthSize, MeasureSpec.UNSPECIFIED);
+            }
         }
-        int cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.UNSPECIFIED);
+        cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.UNSPECIFIED);
 
         int row = 0;
         int col = 0;
