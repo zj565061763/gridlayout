@@ -67,6 +67,8 @@ public class SDGridLayout extends ViewGroup
     private Drawable mHorizontalDivider;
     private Drawable mVerticalDivider;
 
+    private boolean mPreferHorizontalDivider = true;
+
     private BaseAdapter mAdapter;
 
     /**
@@ -163,6 +165,11 @@ public class SDGridLayout extends ViewGroup
     public void setVerticalDivider(Drawable verticalDivider)
     {
         mVerticalDivider = verticalDivider;
+    }
+
+    public void setPreferHorizontalDivider(boolean preferHorizontalDivider)
+    {
+        mPreferHorizontalDivider = preferHorizontalDivider;
     }
 
     /**
@@ -567,7 +574,7 @@ public class SDGridLayout extends ViewGroup
                     right = child.getRight();
                     bottom = top + mHorizontalDivider.getIntrinsicHeight();
 
-                    if (mOrientation == VERTICAL && col < lastCol)
+                    if (mPreferHorizontalDivider && col < lastCol)
                     {
                         right += getVerticalSpacing();
                     }
@@ -583,7 +590,7 @@ public class SDGridLayout extends ViewGroup
                     right = left + mVerticalDivider.getIntrinsicWidth();
                     bottom = child.getBottom();
 
-                    if (mOrientation == HORIZONTAL && row < lastRow)
+                    if (!mPreferHorizontalDivider && row < lastRow)
                     {
                         bottom += getHorizontalSpacing();
                     }
