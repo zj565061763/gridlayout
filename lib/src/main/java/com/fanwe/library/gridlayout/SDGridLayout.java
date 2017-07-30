@@ -2,6 +2,8 @@ package com.fanwe.library.gridlayout;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.View;
@@ -62,6 +64,9 @@ public class SDGridLayout extends ViewGroup
      */
     private int mVerticalSpacing;
 
+    private Drawable mHorizontalDivider;
+    private Drawable mVerticalDivider;
+
     private BaseAdapter mAdapter;
 
     /**
@@ -95,7 +100,9 @@ public class SDGridLayout extends ViewGroup
     }
 
     /**
-     * 设置行或者列的网格数量
+     * 设置行或者列的
+     * <p>
+     * 网格数量
      *
      * @param spanCount
      */
@@ -136,6 +143,26 @@ public class SDGridLayout extends ViewGroup
     public void setVerticalSpacing(int verticalSpacing)
     {
         mVerticalSpacing = verticalSpacing;
+    }
+
+    /**
+     * 设置水平分割线Drawable
+     *
+     * @param horizontalDivider
+     */
+    public void setHorizontalDivider(Drawable horizontalDivider)
+    {
+        mHorizontalDivider = horizontalDivider;
+    }
+
+    /**
+     * 设置竖直分割线Drawable
+     *
+     * @param verticalDivider
+     */
+    public void setVerticalDivider(Drawable verticalDivider)
+    {
+        mVerticalDivider = verticalDivider;
     }
 
     /**
@@ -186,6 +213,24 @@ public class SDGridLayout extends ViewGroup
 
     //----------help method start----------
 
+    private int getVerticalSpacing()
+    {
+        if (mVerticalDivider != null)
+        {
+            return mVerticalDivider.getIntrinsicWidth();
+        }
+        return mVerticalSpacing;
+    }
+
+    private int getHorizontalSpacing()
+    {
+        if (mHorizontalDivider != null)
+        {
+            return mHorizontalDivider.getIntrinsicHeight();
+        }
+        return mHorizontalSpacing;
+    }
+
     /**
      * 返回VERTICAL方向下，列的宽度
      *
@@ -194,7 +239,7 @@ public class SDGridLayout extends ViewGroup
      */
     private int getColumnWidth(int parentWidth)
     {
-        int width = parentWidth - ((mSpanCount - 1) * mVerticalSpacing);
+        int width = parentWidth - ((mSpanCount - 1) * getVerticalSpacing());
         width -= getPaddingLeft() + getPaddingRight();
         int colWidth = (int) (width / (float) mSpanCount + 0.5f);
         return colWidth;
@@ -297,7 +342,7 @@ public class SDGridLayout extends ViewGroup
                 value += mArrColumnWidth.get(i);
                 if (i < count - 1)
                 {
-                    value += mVerticalSpacing;
+                    value += getVerticalSpacing();
                 }
             }
         }
@@ -321,7 +366,7 @@ public class SDGridLayout extends ViewGroup
                 value += mArrRowHeight.get(i);
                 if (i < count - 1)
                 {
-                    value += mHorizontalSpacing;
+                    value += getHorizontalSpacing();
                 }
             }
         }
@@ -455,22 +500,71 @@ public class SDGridLayout extends ViewGroup
             if (mOrientation == VERTICAL)
             {
                 //下一列的left
-                left = right + mVerticalSpacing;
+                left = right + getVerticalSpacing();
                 if (col + 1 == mSpanCount)
                 {
                     //下一行的top
-                    top += mArrRowHeight.get(row) + mHorizontalSpacing;
+                    top += mArrRowHeight.get(row) + getHorizontalSpacing();
                 }
             } else
             {
                 //下一行的top
-                top += mArrRowHeight.get(row) + mHorizontalSpacing;
+                top += mArrRowHeight.get(row) + getHorizontalSpacing();
                 if (row + 1 == mSpanCount)
                 {
                     //下一列的left
-                    left = right + mVerticalSpacing;
+                    left = right + getVerticalSpacing();
                 }
             }
         }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas)
+    {
+        super.onDraw(canvas);
+        canvas.save();
+
+        if (mHorizontalDivider != null && mArrRowHeight.size() > 1)
+        {
+            final int left = getPaddingLeft();
+            int top = getPaddingTop();
+            final int right = getWidth() - getPaddingRight();
+            int bottom = 0;
+
+            final int count = mArrRowHeight.size() - 1;
+            for (int i = 0; i < count; i++)
+            {
+                top += mArrRowHeight.get(i);
+                bottom = top + mHorizontalDivider.getIntrinsicHeight();
+
+                mHorizontalDivider.setBounds(left, top, right, bottom);
+                mHorizontalDivider.draw(canvas);
+
+                top = bottom;
+            }
+        }
+
+        if (mVerticalDivider != null && mArrColumnWidth.size() > 1)
+        {
+            int left = getPaddingLeft();
+            final int top = getPaddingTop();
+            int right = 0;
+            final int bottom = getHeight() - getPaddingBottom();
+
+            final int count = mArrColumnWidth.size() - 1;
+            for (int i = 0; i < count; i++)
+            {
+                left += mArrColumnWidth.get(i);
+                right = left + mVerticalDivider.getIntrinsicWidth();
+
+                mVerticalDivider.setBounds(left, top, right, bottom);
+                mVerticalDivider.draw(canvas);
+
+                left = right;
+            }
+        }
+
+        canvas.restore();
     }
 }

@@ -1,10 +1,12 @@
 package com.fanwe.www.gridlayout;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
 import com.fanwe.library.SDLibrary;
 import com.fanwe.library.activity.SDBaseActivity;
+import com.fanwe.library.drawable.SDDrawable;
 import com.fanwe.library.gridlayout.SDGridLayout;
 import com.fanwe.www.gridlayout.adapter.ListViewAdapter;
 
@@ -20,11 +22,11 @@ public class MainActivity extends SDBaseActivity
         setContentView(R.layout.activity_main);
         view_grid = (SDGridLayout) findViewById(R.id.view_grid);
 
-        ListViewAdapter adapter = new ListViewAdapter(DataModel.get(10), this);
+        ListViewAdapter adapter = new ListViewAdapter(DataModel.get(19), this);
 
         view_grid.setSpanCount(3); //设置行或者列的网格数量
-        view_grid.setVerticalSpacing(10); //设置竖直方向的Item间隔
-        view_grid.setHorizontalSpacing(10); //设置水平方向的Item间隔
+        view_grid.setHorizontalDivider(new SDDrawable().color(Color.BLUE).size(5));
+        view_grid.setVerticalDivider(new SDDrawable().color(Color.BLACK).size(5));
         view_grid.setAdapter(adapter); //设置适配器绑定数据
 
         findViewById(R.id.btn_orientation).setOnClickListener(new View.OnClickListener()
