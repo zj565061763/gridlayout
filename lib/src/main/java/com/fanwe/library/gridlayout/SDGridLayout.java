@@ -67,8 +67,6 @@ public class SDGridLayout extends ViewGroup
     private Drawable mHorizontalDivider;
     private Drawable mVerticalDivider;
 
-    private boolean mSameSizeMode = true;
-
     private BaseAdapter mAdapter;
 
     /**
@@ -453,22 +451,19 @@ public class SDGridLayout extends ViewGroup
             saveColumnWidthIfNeed(col, child.getMeasuredWidth());
         }
 
-        if (mSameSizeMode)
+        for (int i = 0; i < count; i++)
         {
-            for (int i = 0; i < count; i++)
-            {
-                row = getRowIndex(i);
-                col = getColumnIndex(i);
+            row = getRowIndex(i);
+            col = getColumnIndex(i);
 
-                final View child = getChildAt(i);
-                final LayoutParams params = child.getLayoutParams();
+            final View child = getChildAt(i);
+            final LayoutParams params = child.getLayoutParams();
 
-                cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(mArrColumnWidth.get(col), MeasureSpec.EXACTLY);
-                cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(mArrRowHeight.get(row), MeasureSpec.EXACTLY);
+            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(mArrColumnWidth.get(col), MeasureSpec.EXACTLY);
+            cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(mArrRowHeight.get(row), MeasureSpec.EXACTLY);
 
-                child.measure(getChildMeasureSpec(cWidthMeasureSpec, 0, params.width),
-                        getChildMeasureSpec(cHeightMeasureSpec, 0, params.height));
-            }
+            child.measure(getChildMeasureSpec(cWidthMeasureSpec, 0, params.width),
+                    getChildMeasureSpec(cHeightMeasureSpec, 0, params.height));
         }
 
         if (widthMode != MeasureSpec.EXACTLY)
