@@ -568,7 +568,7 @@ public class SDGridLayout extends ViewGroup
                 if (drawHor && row < lastRow)
                 {
                     left = child.getLeft();
-                    top = child.getBottom() + mArrRowHeight.get(row) - child.getHeight();
+                    top = child.getBottom();
                     right = child.getRight();
                     bottom = top + mHorizontalDivider.getIntrinsicHeight();
 
@@ -586,7 +586,7 @@ public class SDGridLayout extends ViewGroup
                     left = child.getRight();
                     top = child.getTop();
                     right = left + mVerticalDivider.getIntrinsicWidth();
-                    bottom = child.getBottom() + mArrRowHeight.get(row) - child.getHeight();
+                    bottom = child.getBottom();
 
                     if (!mPreferHorizontalDivider && row < lastRow)
                     {
