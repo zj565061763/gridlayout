@@ -464,13 +464,11 @@ public class SDGridLayout extends ViewGroup
             col = getColumnIndex(i);
 
             final View child = getChildAt(i);
-            final LayoutParams params = child.getLayoutParams();
 
             cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(mArrColumnWidth.get(col), MeasureSpec.EXACTLY);
             cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(mArrRowHeight.get(row), MeasureSpec.EXACTLY);
 
-            child.measure(getChildMeasureSpec(cWidthMeasureSpec, 0, params.width),
-                    getChildMeasureSpec(cHeightMeasureSpec, 0, params.height));
+            child.measure(cWidthMeasureSpec, cHeightMeasureSpec);
         }
 
         if (widthMode != MeasureSpec.EXACTLY)
@@ -570,7 +568,7 @@ public class SDGridLayout extends ViewGroup
                 if (drawHor && row < lastRow)
                 {
                     left = child.getLeft();
-                    top = child.getBottom();
+                    top = child.getBottom() + mArrRowHeight.get(row) - child.getHeight();
                     right = child.getRight();
                     bottom = top + mHorizontalDivider.getIntrinsicHeight();
 
@@ -588,7 +586,7 @@ public class SDGridLayout extends ViewGroup
                     left = child.getRight();
                     top = child.getTop();
                     right = left + mVerticalDivider.getIntrinsicWidth();
-                    bottom = child.getBottom();
+                    bottom = child.getBottom() + mArrRowHeight.get(row) - child.getHeight();
 
                     if (!mPreferHorizontalDivider && row < lastRow)
                     {
