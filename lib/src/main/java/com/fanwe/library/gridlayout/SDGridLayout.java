@@ -525,43 +525,61 @@ public class SDGridLayout extends ViewGroup
         super.onDraw(canvas);
         canvas.save();
 
-        if (mHorizontalDivider != null && mArrRowHeight.size() > 1)
+        final boolean drawHor = mHorizontalDivider != null && mArrRowHeight.size() > 1;
+        final boolean drawVer = mVerticalDivider != null && mArrColumnWidth.size() > 1;
+
+        if (drawHor || drawVer)
         {
-            final int left = getPaddingLeft();
-            int top = getPaddingTop();
-            final int right = getWidth() - getPaddingRight();
+            final int lastRow = mArrRowHeight.size() - 1;
+            final int lastCol = mArrColumnWidth.size() - 1;
+
+            int row = 0;
+            int col = 0;
+            View child = null;
+
+            int left = 0;
+            int top = 0;
+            int right = 0;
             int bottom = 0;
 
-            final int count = mArrRowHeight.size() - 1;
+            int count = getChildCount();
             for (int i = 0; i < count; i++)
             {
-                top += mArrRowHeight.get(i);
-                bottom = top + mHorizontalDivider.getIntrinsicHeight();
+                row = getRowIndex(i);
+                col = getColumnIndex(i);
+                child = getChildAt(i);
 
-                mHorizontalDivider.setBounds(left, top, right, bottom);
-                mHorizontalDivider.draw(canvas);
+                if (drawHor && row < lastRow)
+                {
+                    left = child.getLeft();
+                    top = child.getBottom();
+                    right = child.getRight();
+                    bottom = top + mHorizontalDivider.getIntrinsicHeight();
 
-                top = bottom;
-            }
-        }
+                    if (mOrientation == VERTICAL && col < lastCol)
+                    {
+                        right += getVerticalSpacing();
+                    }
 
-        if (mVerticalDivider != null && mArrColumnWidth.size() > 1)
-        {
-            int left = getPaddingLeft();
-            final int top = getPaddingTop();
-            int right = 0;
-            final int bottom = getHeight() - getPaddingBottom();
+                    mHorizontalDivider.setBounds(left, top, right, bottom);
+                    mHorizontalDivider.draw(canvas);
+                }
 
-            final int count = mArrColumnWidth.size() - 1;
-            for (int i = 0; i < count; i++)
-            {
-                left += mArrColumnWidth.get(i);
-                right = left + mVerticalDivider.getIntrinsicWidth();
+                if (drawVer && col < lastCol)
+                {
+                    left = child.getRight();
+                    top = child.getTop();
+                    right = left + mVerticalDivider.getIntrinsicWidth();
+                    bottom = child.getBottom();
 
-                mVerticalDivider.setBounds(left, top, right, bottom);
-                mVerticalDivider.draw(canvas);
+                    if (mOrientation == HORIZONTAL && row < lastRow)
+                    {
+                        bottom += getHorizontalSpacing();
+                    }
 
-                left = right;
+                    mVerticalDivider.setBounds(left, top, right, bottom);
+                    mVerticalDivider.draw(canvas);
+                }
             }
         }
 

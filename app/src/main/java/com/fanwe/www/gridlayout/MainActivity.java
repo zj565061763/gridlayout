@@ -22,7 +22,7 @@ public class MainActivity extends SDBaseActivity
         setContentView(R.layout.activity_main);
         view_grid = (SDGridLayout) findViewById(R.id.view_grid);
 
-        ListViewAdapter adapter = new ListViewAdapter(DataModel.get(19), this);
+        ListViewAdapter adapter = new ListViewAdapter(DataModel.get(13), this);
 
         view_grid.setSpanCount(3); //设置行或者列的网格数量
         view_grid.setHorizontalDivider(new SDDrawable().color(Color.BLUE).size(5));

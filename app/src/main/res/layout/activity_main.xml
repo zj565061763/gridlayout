@@ -11,12 +11,20 @@
         android:layout_height="50dp"
         android:text="切换布局方向"/>
 
-    <com.fanwe.library.gridlayout.SDGridLayout
-        android:id="@+id/view_grid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/green"
-        android:padding="10dp"/>
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <com.fanwe.library.gridlayout.SDGridLayout
+            android:id="@+id/view_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/green"
+            android:padding="10dp"/>
+
+    </HorizontalScrollView>
+
+
 
 </LinearLayout>
 
