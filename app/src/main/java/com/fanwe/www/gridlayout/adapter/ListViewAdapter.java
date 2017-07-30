@@ -39,7 +39,15 @@ public class ListViewAdapter extends SDSimpleAdapter<DataModel>
 //            convertView.setLayoutParams(new ViewGroup.LayoutParams(-1, 100));
 //        } else
 //        {
-//            convertView.setLayoutParams(new ViewGroup.LayoutParams(-1, 300));
+//            convertView.setLayoutParams(new ViewGroup.LayoutParams(-1, 200));
+//        }
+
+//        if (position % 2 == 0)
+//        {
+//            convertView.setLayoutParams(new ViewGroup.LayoutParams(100, -1));
+//        } else
+//        {
+//            convertView.setLayoutParams(new ViewGroup.LayoutParams(200, -1));
 //        }
     }
 }
