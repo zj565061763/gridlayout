@@ -167,6 +167,11 @@ public class SDGridLayout extends ViewGroup
         mVerticalDivider = verticalDivider;
     }
 
+    /**
+     * 设置横竖分割线交叉的地方优先用横分割线还是竖分割线
+     *
+     * @param preferHorizontalDivider true-优先横分割线，false-优先竖分割线
+     */
     public void setPreferHorizontalDivider(boolean preferHorizontalDivider)
     {
         mPreferHorizontalDivider = preferHorizontalDivider;
