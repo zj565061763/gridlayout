@@ -23,9 +23,7 @@ public class MainActivity extends SDBaseActivity
 
         ListViewAdapter adapter = new ListViewAdapter(DataModel.get(20), this);
 
-
         view_grid.setSpanCount(3); // 设置行或者列的网格数量
-
         view_grid.setOrientation(GridLayout.VERTICAL); // 设置布局方向（默认竖直方向）
         view_grid.setHorizontalDivider(getResources().getDrawable(R.drawable.divider_horizontal)); // 设置横分割线
         view_grid.setVerticalDivider(getResources().getDrawable(R.drawable.divider_vertical)); // 设置竖分割线
