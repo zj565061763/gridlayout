@@ -3,7 +3,7 @@
 所以写了这个类，该类继承自ViewGroup，类似ReyclerView，支持水平方向和竖直方向布局，但是不包含布局重用机制。
 
 ## Gradle
-`compile 'com.fanwe.android:gridlayout:1.0.5'`
+`compile 'com.fanwe.android:gridlayout:1.0.6'`
 
 ## 效果图
 ![](http://thumbsnap.com/i/xnAK2Zp1.gif?0719)
@@ -35,10 +35,13 @@
 ```
 2. java代码
 ```java
-view_grid.setSpanCount(3); //设置行或者列的网格数量
-view_grid.setVerticalSpacing(10); //设置竖直方向的Item间隔
-view_grid.setHorizontalSpacing(10); //设置水平方向的Item间隔
-view_grid.setAdapter(adapter); //设置适配器绑定数据
+view_grid.setSpanCount(3); // 设置行或者列的网格数量
+view_grid.setOrientation(GridLayout.VERTICAL); // 设置布局方向（默认竖直方向）
+view_grid.setHorizontalDivider(getResources().getDrawable(R.drawable.divider_horizontal)); // 设置横分割线
+view_grid.setVerticalDivider(getResources().getDrawable(R.drawable.divider_vertical)); // 设置竖分割线
+view_grid.setHorizontalSpacing(10); // 设置水平方向间距（如果有设置横分割线，此设置无效）
+view_grid.setVerticalSpacing(10); //竖直方向间距（如果有设置竖分割线，此设置无效）
+view_grid.setAdapter(adapter); // 设置适配器绑定数据
 
 findViewById(R.id.btn_orientation).setOnClickListener(new View.OnClickListener()
 {
@@ -47,7 +50,7 @@ findViewById(R.id.btn_orientation).setOnClickListener(new View.OnClickListener()
     {
         if (view_grid.getOrientation() == SDGridLayout.HORIZONTAL)
         {
-            view_grid.setOrientation(SDGridLayout.VERTICAL); //设置竖直方向布局（默认竖直方向）
+            view_grid.setOrientation(SDGridLayout.VERTICAL); //设置竖直方向布局
         } else
         {
             view_grid.setOrientation(SDGridLayout.HORIZONTAL); //设置水平方向布局
