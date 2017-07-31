@@ -23,16 +23,15 @@ public class MainActivity extends SDBaseActivity
 
         ListViewAdapter adapter = new ListViewAdapter(DataModel.get(20), this);
 
-        // 设置行或者列的网格数量
-        view_grid.setSpanCount(3);
-        // 设置布局方向（默认竖直方向）
-        view_grid.setOrientation(GridLayout.VERTICAL);
-        // 设置横分割线
-        view_grid.setHorizontalDivider(getResources().getDrawable(R.drawable.divider_horizontal));
-        // 设置竖分割线
-        view_grid.setVerticalDivider(getResources().getDrawable(R.drawable.divider_vertical));
-        // 设置适配器绑定数据
-        view_grid.setAdapter(adapter);
+
+        view_grid.setSpanCount(3); // 设置行或者列的网格数量
+
+        view_grid.setOrientation(GridLayout.VERTICAL); // 设置布局方向（默认竖直方向）
+        view_grid.setHorizontalDivider(getResources().getDrawable(R.drawable.divider_horizontal)); // 设置横分割线
+        view_grid.setVerticalDivider(getResources().getDrawable(R.drawable.divider_vertical)); // 设置竖分割线
+        view_grid.setHorizontalSpacing(10); // 设置水平方向间距（如果有设置横分割线，此设置无效）
+        view_grid.setVerticalSpacing(10); //竖直方向间距（如果有设置竖分割线，此设置无效）
+        view_grid.setAdapter(adapter); // 设置适配器绑定数据
 
         findViewById(R.id.btn_orientation).setOnClickListener(new View.OnClickListener()
         {
@@ -41,15 +40,12 @@ public class MainActivity extends SDBaseActivity
             {
                 if (view_grid.getOrientation() == SDGridLayout.HORIZONTAL)
                 {
-                    //设置竖直方向布局
-                    view_grid.setOrientation(SDGridLayout.VERTICAL);
+                    view_grid.setOrientation(SDGridLayout.VERTICAL); //设置竖直方向布局
                 } else
                 {
-                    //设置水平方向布局
-                    view_grid.setOrientation(SDGridLayout.HORIZONTAL);
+                    view_grid.setOrientation(SDGridLayout.HORIZONTAL); //设置水平方向布局
                 }
-                //重新布局
-                view_grid.requestLayout();
+                view_grid.requestLayout(); //重新布局
             }
         });
     }
