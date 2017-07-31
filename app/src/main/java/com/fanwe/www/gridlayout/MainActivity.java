@@ -1,13 +1,11 @@
 package com.fanwe.www.gridlayout;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.GridLayout;
 
 import com.fanwe.library.SDLibrary;
 import com.fanwe.library.activity.SDBaseActivity;
-import com.fanwe.library.drawable.SDDrawable;
 import com.fanwe.library.gridlayout.SDGridLayout;
 import com.fanwe.www.gridlayout.adapter.ListViewAdapter;
 
@@ -25,10 +23,16 @@ public class MainActivity extends SDBaseActivity
 
         ListViewAdapter adapter = new ListViewAdapter(DataModel.get(20), this);
 
-        view_grid.setSpanCount(3); //设置行或者列的网格数量
-        view_grid.setHorizontalDivider(new SDDrawable().color(Color.BLUE).size(5));
-        view_grid.setVerticalDivider(new SDDrawable().color(Color.BLACK).size(5));
-        view_grid.setAdapter(adapter); //设置适配器绑定数据
+        // 设置行或者列的网格数量
+        view_grid.setSpanCount(3);
+        // 设置布局方向（默认竖直方向）
+        view_grid.setOrientation(GridLayout.VERTICAL);
+        // 设置横分割线
+        view_grid.setHorizontalDivider(getResources().getDrawable(R.drawable.divider_horizontal));
+        // 设置竖分割线
+        view_grid.setVerticalDivider(getResources().getDrawable(R.drawable.divider_vertical));
+        // 设置适配器绑定数据
+        view_grid.setAdapter(adapter);
 
         findViewById(R.id.btn_orientation).setOnClickListener(new View.OnClickListener()
         {
@@ -37,12 +41,15 @@ public class MainActivity extends SDBaseActivity
             {
                 if (view_grid.getOrientation() == SDGridLayout.HORIZONTAL)
                 {
-                    view_grid.setOrientation(SDGridLayout.VERTICAL); //设置竖直方向布局（默认竖直方向）
+                    //设置竖直方向布局
+                    view_grid.setOrientation(SDGridLayout.VERTICAL);
                 } else
                 {
-                    view_grid.setOrientation(SDGridLayout.HORIZONTAL); //设置水平方向布局
+                    //设置水平方向布局
+                    view_grid.setOrientation(SDGridLayout.HORIZONTAL);
                 }
-                view_grid.requestLayout(); //重新布局
+                //重新布局
+                view_grid.requestLayout();
             }
         });
     }
