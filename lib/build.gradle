@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 17073101
-        versionName "1.0.6"
+        versionCode 17081001
+        versionName "1.0.8"
     }
     buildTypes {
         release {
@@ -25,14 +25,14 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+
 }
 
 publish {
     userOrg = 'zj565061763'
     groupId = 'com.fanwe.android'
     artifactId = 'gridlayout'
-    publishVersion = '1.0.6'
+    publishVersion = '1.0.8'
     desc = 'fanwe android gridlayout library'
     website = 'https://github.com/zj565061763/GridLayout'
 }
