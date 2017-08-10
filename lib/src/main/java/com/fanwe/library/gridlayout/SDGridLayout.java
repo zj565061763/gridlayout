@@ -77,7 +77,10 @@ public class SDGridLayout extends ViewGroup
 
     private void init()
     {
-        setBackgroundColor(Color.TRANSPARENT);
+        if (getBackground() == null)
+        {
+            setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 
     /**
