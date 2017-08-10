@@ -3,6 +3,7 @@ package com.fanwe.library.gridlayout;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.SparseArray;
@@ -19,16 +20,19 @@ public class SDGridLayout extends ViewGroup
     public SDGridLayout(Context context)
     {
         super(context);
+        init();
     }
 
     public SDGridLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        init();
     }
 
     public SDGridLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
     /**
@@ -70,6 +74,11 @@ public class SDGridLayout extends ViewGroup
     private boolean mPreferHorizontalDivider = true;
 
     private BaseAdapter mAdapter;
+
+    private void init()
+    {
+        setBackgroundColor(Color.TRANSPARENT);
+    }
 
     /**
      * 设置布局方向，默认竖直方向<br>
