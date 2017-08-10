@@ -225,7 +225,7 @@ public class SDGridLayout extends ViewGroup
 
     //----------help method start----------
 
-    private int getVerticalSpacing()
+    public int getVerticalSpacing()
     {
         if (mVerticalDivider != null)
         {
@@ -234,7 +234,7 @@ public class SDGridLayout extends ViewGroup
         return mVerticalSpacing;
     }
 
-    private int getHorizontalSpacing()
+    public int getHorizontalSpacing()
     {
         if (mHorizontalDivider != null)
         {
@@ -346,13 +346,16 @@ public class SDGridLayout extends ViewGroup
     {
         int value = getPaddingLeft() + getPaddingRight();
 
-        int count = getColumnCount();
-        for (int i = 0; i < count; i++)
+        if (mArrColumnWidth.size() > 0)
         {
-            value += mArrColumnWidth.get(i);
-            if (i < count - 1)
+            final int count = getColumnCount();
+            for (int i = 0; i < count; i++)
             {
-                value += getVerticalSpacing();
+                value += mArrColumnWidth.get(i);
+                if (i < count - 1)
+                {
+                    value += getVerticalSpacing();
+                }
             }
         }
         return value;
@@ -367,13 +370,16 @@ public class SDGridLayout extends ViewGroup
     {
         int value = getPaddingTop() + getPaddingBottom();
 
-        int count = getRowCount();
-        for (int i = 0; i < count; i++)
+        if (mArrRowHeight.size() > 0)
         {
-            value += mArrRowHeight.get(i);
-            if (i < count - 1)
+            final int count = getRowCount();
+            for (int i = 0; i < count; i++)
             {
-                value += getHorizontalSpacing();
+                value += mArrRowHeight.get(i);
+                if (i < count - 1)
+                {
+                    value += getHorizontalSpacing();
+                }
             }
         }
         return value;
