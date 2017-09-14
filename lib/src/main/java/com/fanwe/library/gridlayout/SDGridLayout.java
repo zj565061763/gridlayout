@@ -477,13 +477,14 @@ public class SDGridLayout extends ViewGroup
 
         int row = 0;
         int col = 0;
+        View child = null;
         final int count = getChildCount();
         for (int i = 0; i < count; i++)
         {
             row = getRowIndex(i);
             col = getColumnIndex(i);
 
-            final View child = getChildAt(i);
+            child = getChildAt(i);
             final LayoutParams params = child.getLayoutParams();
 
             child.measure(getChildMeasureSpec(cWidthMeasureSpec, 0, params.width),
@@ -498,7 +499,7 @@ public class SDGridLayout extends ViewGroup
             row = getRowIndex(i);
             col = getColumnIndex(i);
 
-            final View child = getChildAt(i);
+            child = getChildAt(i);
 
             cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(mArrColumnWidth.get(col), MeasureSpec.EXACTLY);
             cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(mArrRowHeight.get(row), MeasureSpec.EXACTLY);
