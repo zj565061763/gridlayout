@@ -12,7 +12,7 @@ allprojects {
 }
 
 dependencies {
-        compile 'com.github.zj565061763:gridlayout:1.0.10'
+        compile 'com.github.zj565061763:gridlayout:1.0.11'
 }
 
 ```
@@ -36,7 +36,7 @@ dependencies {
         android:layout_height="50dp"
         android:text="切换布局方向"/>
 
-    <com.fanwe.library.gridlayout.SDGridLayout
+    <com.fanwe.lib.gridlayout.SDGridLayout
         android:id="@+id/view_grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
