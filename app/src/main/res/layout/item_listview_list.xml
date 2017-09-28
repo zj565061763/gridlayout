@@ -6,11 +6,11 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.fanwe.library.gridlayout.SDGridLayout
+    <com.fanwe.lib.gridlayout.SDGridLayout
         android:id="@+id/view_grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </com.fanwe.library.gridlayout.SDGridLayout>
+    </com.fanwe.lib.gridlayout.SDGridLayout>
 
 </LinearLayout>

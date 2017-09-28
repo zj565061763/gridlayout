@@ -6,7 +6,7 @@ import android.widget.GridLayout;
 
 import com.fanwe.library.SDLibrary;
 import com.fanwe.library.activity.SDBaseActivity;
-import com.fanwe.library.gridlayout.SDGridLayout;
+import com.fanwe.lib.gridlayout.SDGridLayout;
 import com.fanwe.www.gridlayout.adapter.ListViewAdapter;
 
 public class MainActivity extends SDBaseActivity

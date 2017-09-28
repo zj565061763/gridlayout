@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fanwe.library.adapter.SDSimpleAdapter;
-import com.fanwe.library.gridlayout.SDGridLayout;
+import com.fanwe.lib.gridlayout.SDGridLayout;
 import com.fanwe.www.gridlayout.DataModel;
 import com.fanwe.www.gridlayout.R;
 
