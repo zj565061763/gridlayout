@@ -12,7 +12,7 @@ allprojects {
 }
 
 dependencies {
-        compile 'com.github.zj565061763:gridlayout:1.0.9'
+        compile 'com.github.zj565061763:gridlayout:1.0.10'
 }
 
 ```
