@@ -1,15 +1,17 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.github.zj565061763'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 17083101
-        versionName "1.0.9"
+        versionCode 20170928
+        versionName "1.0.10"
     }
     buildTypes {
         release {
@@ -26,21 +28,4 @@ android {
 
 dependencies {
 
-}
-
-publish {
-    userOrg = 'zj565061763'
-    groupId = 'com.fanwe.android'
-    artifactId = 'gridlayout'
-    publishVersion = '1.0.9'
-    desc = 'fanwe android gridlayout library'
-    website = 'https://github.com/zj565061763/gridlayout'
-}
-
-tasks.withType(Javadoc) {
-    options {
-        encoding "UTF-8"
-        charSet 'UTF-8'
-        failOnError false
-    }
 }
