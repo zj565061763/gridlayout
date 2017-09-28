@@ -3,7 +3,19 @@
 所以写了这个类，该类继承自ViewGroup，类似ReyclerView，支持水平方向和竖直方向布局，但是不包含布局重用机制。
 
 ## Gradle
-`compile 'com.fanwe.android:gridlayout:1.0.9'`
+```
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+dependencies {
+        compile 'com.github.zj565061763:gridlayout:1.0.9'
+}
+
+```
 
 ## 效果图
 ![](http://thumbsnap.com/i/xnAK2Zp1.gif?0719)
