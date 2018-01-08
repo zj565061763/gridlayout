@@ -6,20 +6,20 @@ import android.widget.GridLayout;
 
 import com.fanwe.library.SDLibrary;
 import com.fanwe.library.activity.SDBaseActivity;
-import com.fanwe.lib.gridlayout.SDGridLayout;
+import com.fanwe.lib.gridlayout.FGridLayout;
 import com.fanwe.www.gridlayout.adapter.ListViewAdapter;
 
 public class MainActivity extends SDBaseActivity
 {
 
-    private SDGridLayout view_grid;
+    private FGridLayout view_grid;
 
     @Override
     protected void init(Bundle savedInstanceState)
     {
         SDLibrary.getInstance().init(getApplication());
         setContentView(R.layout.activity_main);
-        view_grid = (SDGridLayout) findViewById(R.id.view_grid);
+        view_grid = (FGridLayout) findViewById(R.id.view_grid);
 
         ListViewAdapter adapter = new ListViewAdapter(DataModel.get(20), this);
 
@@ -36,12 +36,12 @@ public class MainActivity extends SDBaseActivity
             @Override
             public void onClick(View v)
             {
-                if (view_grid.getOrientation() == SDGridLayout.HORIZONTAL)
+                if (view_grid.getOrientation() == FGridLayout.HORIZONTAL)
                 {
-                    view_grid.setOrientation(SDGridLayout.VERTICAL); //设置竖直方向布局
+                    view_grid.setOrientation(FGridLayout.VERTICAL); //设置竖直方向布局
                 } else
                 {
-                    view_grid.setOrientation(SDGridLayout.HORIZONTAL); //设置水平方向布局
+                    view_grid.setOrientation(FGridLayout.HORIZONTAL); //设置水平方向布局
                 }
                 view_grid.requestLayout(); //重新布局
             }

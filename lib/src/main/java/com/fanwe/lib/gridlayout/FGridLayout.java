@@ -27,21 +27,21 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 
-public class SDGridLayout extends ViewGroup
+public class FGridLayout extends ViewGroup
 {
-    public SDGridLayout(Context context)
+    public FGridLayout(Context context)
     {
         super(context);
         init();
     }
 
-    public SDGridLayout(Context context, AttributeSet attrs)
+    public FGridLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         init();
     }
 
-    public SDGridLayout(Context context, AttributeSet attrs, int defStyleAttr)
+    public FGridLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
         init();

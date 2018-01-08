@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fanwe.library.adapter.SDSimpleAdapter;
-import com.fanwe.lib.gridlayout.SDGridLayout;
+import com.fanwe.lib.gridlayout.FGridLayout;
 import com.fanwe.www.gridlayout.DataModel;
 import com.fanwe.www.gridlayout.R;
 
@@ -31,7 +31,7 @@ public class ListViewListAdapter extends SDSimpleAdapter<List<DataModel>>
     @Override
     public void bindData(int position, View convertView, ViewGroup parent, List<DataModel> model)
     {
-        SDGridLayout view_grid = get(R.id.view_grid, convertView);
+        FGridLayout view_grid = get(R.id.view_grid, convertView);
         view_grid.setSpanCount(3);
         view_grid.setVerticalSpacing(10);
         view_grid.setHorizontalSpacing(10);

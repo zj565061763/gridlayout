@@ -24,7 +24,7 @@
         android:layout_height="50dp"
         android:text="切换布局方向"/>
 
-    <com.fanwe.lib.gridlayout.SDGridLayout
+    <com.fanwe.lib.gridlayout.FGridLayout
         android:id="@+id/view_grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,12 +48,12 @@ findViewById(R.id.btn_orientation).setOnClickListener(new View.OnClickListener()
     @Override
     public void onClick(View v)
     {
-        if (view_grid.getOrientation() == SDGridLayout.HORIZONTAL)
+        if (view_grid.getOrientation() == FGridLayout.HORIZONTAL)
         {
-            view_grid.setOrientation(SDGridLayout.VERTICAL); //设置竖直方向布局
+            view_grid.setOrientation(FGridLayout.VERTICAL); //设置竖直方向布局
         } else
         {
-            view_grid.setOrientation(SDGridLayout.HORIZONTAL); //设置水平方向布局
+            view_grid.setOrientation(FGridLayout.HORIZONTAL); //设置水平方向布局
         }
         view_grid.requestLayout(); //重新布局
     }
