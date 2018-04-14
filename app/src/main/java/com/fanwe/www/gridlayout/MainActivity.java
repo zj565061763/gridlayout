@@ -1,27 +1,26 @@
 package com.fanwe.www.gridlayout;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.GridLayout;
 
-import com.fanwe.library.SDLibrary;
-import com.fanwe.library.activity.SDBaseActivity;
 import com.fanwe.lib.gridlayout.FGridLayout;
 import com.fanwe.www.gridlayout.adapter.ListViewAdapter;
 
-public class MainActivity extends SDBaseActivity
+public class MainActivity extends AppCompatActivity
 {
-
     private FGridLayout view_grid;
 
     @Override
-    protected void init(Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        SDLibrary.getInstance().init(getApplication());
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        view_grid = (FGridLayout) findViewById(R.id.view_grid);
+        view_grid = findViewById(R.id.view_grid);
 
-        ListViewAdapter adapter = new ListViewAdapter(DataModel.get(20), this);
+        ListViewAdapter adapter = new ListViewAdapter(this);
+        adapter.getDataHolder().setData(DataModel.get(20));
 
         view_grid.setSpanCount(3); // 设置行或者列的网格数量
         view_grid.setOrientation(GridLayout.VERTICAL); // 设置布局方向（默认竖直方向）

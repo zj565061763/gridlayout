@@ -5,21 +5,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.fanwe.library.adapter.SDSimpleAdapter;
+import com.fanwe.lib.adapter.FSimpleAdapter;
 import com.fanwe.www.gridlayout.DataModel;
 import com.fanwe.www.gridlayout.R;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/17.
  */
 
-public class ListViewAdapter extends SDSimpleAdapter<DataModel>
+public class ListViewAdapter extends FSimpleAdapter<DataModel>
 {
-    public ListViewAdapter(List<DataModel> listModel, Activity activity)
+    public ListViewAdapter(Activity activity)
     {
-        super(listModel, activity);
+        super(activity);
     }
 
     @Override
@@ -29,7 +27,7 @@ public class ListViewAdapter extends SDSimpleAdapter<DataModel>
     }
 
     @Override
-    public void bindData(int position, View convertView, ViewGroup parent, DataModel model)
+    public void onBindData(int position, View convertView, ViewGroup parent, DataModel model)
     {
         TextView tv_position = get(R.id.tv_position, convertView);
         tv_position.setText(String.valueOf(position));
