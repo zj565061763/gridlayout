@@ -457,17 +457,13 @@ public class FGridLayout extends ViewGroup
             cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(widthSize, MeasureSpec.UNSPECIFIED);
         }
 
-        int row = 0;
-        int col = 0;
-        View child = null;
         final int count = getChildCount();
         for (int i = 0; i < count; i++)
         {
-            row = getRowIndex(i);
-            col = getColumnIndex(i);
-
-            child = getChildAt(i);
-            final LayoutParams params = child.getLayoutParams();
+            final int row = getRowIndex(i);
+            final int col = getColumnIndex(i);
+            final View child = getChildAt(i);
+            final ViewGroup.LayoutParams params = child.getLayoutParams();
 
             child.measure(getChildMeasureSpec(cWidthMeasureSpec, 0, params.width),
                     getChildMeasureSpec(cHeightMeasureSpec, 0, params.height));
@@ -478,10 +474,9 @@ public class FGridLayout extends ViewGroup
 
         for (int i = 0; i < count; i++)
         {
-            row = getRowIndex(i);
-            col = getColumnIndex(i);
-
-            child = getChildAt(i);
+            final int row = getRowIndex(i);
+            final int col = getColumnIndex(i);
+            final View child = getChildAt(i);
 
             cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(mColumnWidthHolder.get(col), MeasureSpec.EXACTLY);
             cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(mRowHeightHolder.get(row), MeasureSpec.EXACTLY);
@@ -498,29 +493,23 @@ public class FGridLayout extends ViewGroup
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b)
     {
-        int row = 0;
-        int col = 0;
         int left = 0;
         int top = 0;
-
         final int count = getChildCount();
         for (int i = 0; i < count; i++)
         {
-            row = getRowIndex(i);
-            col = getColumnIndex(i);
-
+            final int row = getRowIndex(i);
+            final int col = getColumnIndex(i);
             final View child = getChildAt(i);
-            if (row == 0)
-            {
-                top = getPaddingTop();
-            }
-            if (col == 0)
-            {
-                left = getPaddingLeft();
-            }
 
-            int right = left + child.getMeasuredWidth();
-            int bottom = top + child.getMeasuredHeight();
+            if (row == 0)
+                top = getPaddingTop();
+
+            if (col == 0)
+                left = getPaddingLeft();
+
+            final int right = left + child.getMeasuredWidth();
+            final int bottom = top + child.getMeasuredHeight();
 
             child.layout(left, top, right, bottom);
 
