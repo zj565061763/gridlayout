@@ -443,7 +443,7 @@ public class FGridLayout extends ViewGroup
             cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidthInVerticalMode(widthSize), MeasureSpec.EXACTLY);
         } else
         {
-            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(widthSize, MeasureSpec.UNSPECIFIED);
+            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(widthSize, widthMode);
         }
         cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.UNSPECIFIED);
 
