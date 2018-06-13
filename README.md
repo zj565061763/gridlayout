@@ -2,13 +2,15 @@
 由于在某些场合确实需要在ScrollView中嵌套网格或者列表布局，但是原生的ListView和GridView不能和ScrollView嵌套，如果重写ListView和GridView的onMeasure方法会导致在布局复杂的情况下极其的消耗性能卡顿明显。<br>
 所以写了这个类，该类继承自ViewGroup，类似ReyclerView，支持水平方向和竖直方向布局，但是不包含布局重用机制。
 
-## Gradle
-[![](https://jitpack.io/v/zj565061763/gridlayout.svg)](https://jitpack.io/#zj565061763/gridlayout)
+# Gradle
+```
+implementation 'com.fanwe.android:gridlayout:1.0.17'
+```
 
-## 效果图
+# 效果图
 ![](http://thumbsnap.com/i/xnAK2Zp1.gif?0719)
 
-## 使用
+# 使用
 1. xml布局
 ```xml
 <?xml version="1.0" encoding="utf-8"?>

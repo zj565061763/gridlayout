@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         view_grid = findViewById(R.id.view_grid);
 
-        ListViewAdapter adapter = new ListViewAdapter(this);
+        ListViewAdapter adapter = new ListViewAdapter();
         adapter.getDataHolder().setData(DataModel.get(20));
 
         view_grid.setSpanCount(3); // 设置行或者列的网格数量

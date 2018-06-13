@@ -15,11 +15,6 @@ import com.fanwe.www.gridlayout.R;
 
 public class ListViewAdapter extends FSimpleAdapter<DataModel>
 {
-    public ListViewAdapter(Activity activity)
-    {
-        super(activity);
-    }
-
     @Override
     public int getLayoutId(int position, View convertView, ViewGroup parent)
     {
