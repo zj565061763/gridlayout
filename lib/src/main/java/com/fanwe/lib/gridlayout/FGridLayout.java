@@ -58,11 +58,11 @@ public class FGridLayout extends ViewGroup
     /**
      * 保存每一行的最大高度，key：行，value：高度
      */
-    private SparseArray<Integer> mArrRowHeight = new SparseArray<>();
+    private final SparseArray<Integer> mRowHeightHolder = new SparseArray<>();
     /**
      * 保存每一列的最大宽度，key：列，value：宽度
      */
-    private SparseArray<Integer> mArrColumnWidth = new SparseArray<>();
+    private final SparseArray<Integer> mColumnWidthHolder = new SparseArray<>();
     /**
      * 布局方向
      */
@@ -90,9 +90,7 @@ public class FGridLayout extends ViewGroup
     private void init()
     {
         if (getBackground() == null)
-        {
             setBackgroundColor(Color.TRANSPARENT);
-        }
     }
 
     /**
@@ -135,9 +133,8 @@ public class FGridLayout extends ViewGroup
     public void setSpanCount(int spanCount)
     {
         if (spanCount < 1)
-        {
             spanCount = 1;
-        }
+
         mSpanCount = spanCount;
     }
 
@@ -174,25 +171,25 @@ public class FGridLayout extends ViewGroup
     /**
      * 设置水平分割线Drawable
      *
-     * @param horizontalDivider
+     * @param drawable
      */
-    public void setHorizontalDivider(Drawable horizontalDivider)
+    public void setHorizontalDivider(Drawable drawable)
     {
-        mHorizontalDivider = horizontalDivider;
+        mHorizontalDivider = drawable;
     }
 
     /**
      * 设置竖直分割线Drawable
      *
-     * @param verticalDivider
+     * @param drawable
      */
-    public void setVerticalDivider(Drawable verticalDivider)
+    public void setVerticalDivider(Drawable drawable)
     {
-        mVerticalDivider = verticalDivider;
+        mVerticalDivider = drawable;
     }
 
     /**
-     * 设置横竖分割线交叉的地方优先用横分割线还是竖分割线
+     * 设置横竖分割线交叉的地方优先用横分割线还是竖分割线，默认优先横分割线
      *
      * @param preferHorizontalDivider true-优先横分割线，false-优先竖分割线
      */
@@ -209,18 +206,17 @@ public class FGridLayout extends ViewGroup
     public void setAdapter(BaseAdapter adapter)
     {
         if (mAdapter != null)
-        {
             mAdapter.unregisterDataSetObserver(mDataSetObserver);
-        }
+
         mAdapter = adapter;
+
         if (adapter != null)
-        {
             adapter.registerDataSetObserver(mDataSetObserver);
-        }
+
         bindData();
     }
 
-    private DataSetObserver mDataSetObserver = new DataSetObserver()
+    private final DataSetObserver mDataSetObserver = new DataSetObserver()
     {
         @Override
         public void onChanged()
@@ -234,15 +230,12 @@ public class FGridLayout extends ViewGroup
     {
         removeAllViews();
         if (mAdapter == null || mAdapter.getCount() <= 0)
-        {
             return;
-        }
 
         final int count = mAdapter.getCount();
-        View child = null;
         for (int i = 0; i < count; i++)
         {
-            child = mAdapter.getView(i, null, this);
+            final View child = mAdapter.getView(i, null, this);
             addView(child);
         }
     }
@@ -251,20 +244,12 @@ public class FGridLayout extends ViewGroup
 
     public int getVerticalSpacing()
     {
-        if (mVerticalDivider != null)
-        {
-            return mVerticalDivider.getIntrinsicWidth();
-        }
-        return mVerticalSpacing;
+        return mVerticalDivider == null ? mVerticalSpacing : mVerticalDivider.getIntrinsicWidth();
     }
 
     public int getHorizontalSpacing()
     {
-        if (mHorizontalDivider != null)
-        {
-            return mHorizontalDivider.getIntrinsicHeight();
-        }
-        return mHorizontalSpacing;
+        return mHorizontalDivider == null ? mHorizontalSpacing : mHorizontalDivider.getIntrinsicHeight();
     }
 
     /**
@@ -275,10 +260,9 @@ public class FGridLayout extends ViewGroup
      */
     private int getColumnWidth(int parentWidth)
     {
-        int width = parentWidth - ((mSpanCount - 1) * getVerticalSpacing());
-        width -= getPaddingLeft() + getPaddingRight();
-        int colWidth = (int) (width / (float) mSpanCount + 0.5f);
-        return colWidth;
+        final int width = parentWidth - ((mSpanCount - 1) * getVerticalSpacing())
+                - (getPaddingLeft() + getPaddingRight());
+        return (int) (width / (float) mSpanCount + 0.5f);
     }
 
     /**
@@ -324,14 +308,9 @@ public class FGridLayout extends ViewGroup
     {
         if (mOrientation == VERTICAL)
         {
-            int div = getChildCount() / mSpanCount;
-            if (getChildCount() % mSpanCount == 0)
-            {
-                return div;
-            } else
-            {
-                return div + 1;
-            }
+            final int count = getChildCount() / mSpanCount;
+            final int left = getChildCount() % mSpanCount;
+            return left == 0 ? count : count + 1;
         } else
         {
             return mSpanCount;
@@ -350,14 +329,9 @@ public class FGridLayout extends ViewGroup
             return mSpanCount;
         } else
         {
-            int div = getChildCount() / mSpanCount;
-            if (getChildCount() % mSpanCount == 0)
-            {
-                return div;
-            } else
-            {
-                return div + 1;
-            }
+            final int count = getChildCount() / mSpanCount;
+            final int left = getChildCount() % mSpanCount;
+            return left == 0 ? count : count + 1;
         }
     }
 
@@ -370,16 +344,14 @@ public class FGridLayout extends ViewGroup
     {
         int value = getPaddingLeft() + getPaddingRight();
 
-        if (mArrColumnWidth.size() > 0)
+        if (mColumnWidthHolder.size() > 0)
         {
             final int count = getColumnCount();
             for (int i = 0; i < count; i++)
             {
-                value += mArrColumnWidth.get(i);
+                value += mColumnWidthHolder.get(i);
                 if (i < count - 1)
-                {
                     value += getVerticalSpacing();
-                }
             }
         }
         return value;
@@ -394,16 +366,14 @@ public class FGridLayout extends ViewGroup
     {
         int value = getPaddingTop() + getPaddingBottom();
 
-        if (mArrRowHeight.size() > 0)
+        if (mRowHeightHolder.size() > 0)
         {
             final int count = getRowCount();
             for (int i = 0; i < count; i++)
             {
-                value += mArrRowHeight.get(i);
+                value += mRowHeightHolder.get(i);
                 if (i < count - 1)
-                {
                     value += getHorizontalSpacing();
-                }
             }
         }
         return value;
@@ -411,16 +381,16 @@ public class FGridLayout extends ViewGroup
 
     private boolean saveRowHeightIfNeed(int row, int childHeight)
     {
-        Integer oldValue = mArrRowHeight.get(row);
+        final Integer oldValue = mRowHeightHolder.get(row);
         if (oldValue == null)
         {
-            mArrRowHeight.put(row, childHeight);
+            mRowHeightHolder.put(row, childHeight);
             return true;
         } else
         {
             if (childHeight > oldValue)
             {
-                mArrRowHeight.put(row, childHeight);
+                mRowHeightHolder.put(row, childHeight);
                 return true;
             } else
             {
@@ -431,16 +401,16 @@ public class FGridLayout extends ViewGroup
 
     private boolean saveColumnWidthIfNeed(int column, int childWidth)
     {
-        Integer oldValue = mArrColumnWidth.get(column);
+        final Integer oldValue = mColumnWidthHolder.get(column);
         if (oldValue == null)
         {
-            mArrColumnWidth.put(column, childWidth);
+            mColumnWidthHolder.put(column, childWidth);
             return true;
         } else
         {
             if (childWidth > oldValue)
             {
-                mArrColumnWidth.put(column, childWidth);
+                mColumnWidthHolder.put(column, childWidth);
                 return true;
             } else
             {
@@ -454,8 +424,8 @@ public class FGridLayout extends ViewGroup
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
-        mArrRowHeight.clear();
-        mArrColumnWidth.clear();
+        mRowHeightHolder.clear();
+        mColumnWidthHolder.clear();
 
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
@@ -501,8 +471,8 @@ public class FGridLayout extends ViewGroup
 
             child = getChildAt(i);
 
-            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(mArrColumnWidth.get(col), MeasureSpec.EXACTLY);
-            cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(mArrRowHeight.get(row), MeasureSpec.EXACTLY);
+            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(mColumnWidthHolder.get(col), MeasureSpec.EXACTLY);
+            cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(mRowHeightHolder.get(row), MeasureSpec.EXACTLY);
 
             child.measure(cWidthMeasureSpec, cHeightMeasureSpec);
         }
@@ -556,12 +526,12 @@ public class FGridLayout extends ViewGroup
                 if (col + 1 == mSpanCount)
                 {
                     //下一行的top
-                    top += mArrRowHeight.get(row) + getHorizontalSpacing();
+                    top += mRowHeightHolder.get(row) + getHorizontalSpacing();
                 }
             } else
             {
                 //下一行的top
-                top += mArrRowHeight.get(row) + getHorizontalSpacing();
+                top += mRowHeightHolder.get(row) + getHorizontalSpacing();
                 if (row + 1 == mSpanCount)
                 {
                     //下一列的left
@@ -577,13 +547,13 @@ public class FGridLayout extends ViewGroup
         super.onDraw(canvas);
         canvas.save();
 
-        final boolean drawHor = mHorizontalDivider != null && mArrRowHeight.size() > 1;
-        final boolean drawVer = mVerticalDivider != null && mArrColumnWidth.size() > 1;
+        final boolean drawHor = mHorizontalDivider != null && mRowHeightHolder.size() > 1;
+        final boolean drawVer = mVerticalDivider != null && mColumnWidthHolder.size() > 1;
 
         if (drawHor || drawVer)
         {
-            final int lastRow = mArrRowHeight.size() - 1;
-            final int lastCol = mArrColumnWidth.size() - 1;
+            final int lastRow = mRowHeightHolder.size() - 1;
+            final int lastCol = mColumnWidthHolder.size() - 1;
 
             int row = 0;
             int col = 0;
