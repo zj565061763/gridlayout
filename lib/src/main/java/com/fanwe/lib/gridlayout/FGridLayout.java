@@ -254,17 +254,18 @@ public class FGridLayout extends ViewGroup
         return mHorizontalDivider == null ? mHorizontalSpacing : mHorizontalDivider.getIntrinsicHeight();
     }
 
-    /**
-     * 返回VERTICAL方向下，列的宽度
-     *
-     * @param parentWidth
-     * @return
-     */
-    private int getColumnWidthInVerticalMode(int parentWidth)
+    private int getColumnWidthInVerticalMode(int total)
     {
-        final int width = parentWidth - ((mSpanCount - 1) * getVerticalSpacing())
+        final int value = total - ((mSpanCount - 1) * getVerticalSpacing())
                 - (getPaddingLeft() + getPaddingRight());
-        return (int) (width / (float) mSpanCount + 0.5f);
+        return (int) (value / (float) mSpanCount + 0.5f);
+    }
+
+    private int getRowHeightInHorizontalMode(int total)
+    {
+        final int value = total - ((mSpanCount - 1) * getHorizontalSpacing())
+                - (getPaddingTop() + getPaddingBottom());
+        return (int) (value / (float) mSpanCount + 0.5f);
     }
 
     /**
@@ -438,14 +439,23 @@ public class FGridLayout extends ViewGroup
         int cWidthMeasureSpec = 0;
         int cHeightMeasureSpec = 0;
 
-        if (mOrientation == VERTICAL && widthMode == MeasureSpec.EXACTLY)
+        if (mOrientation == VERTICAL)
         {
-            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidthInVerticalMode(widthSize), MeasureSpec.EXACTLY);
+            if (widthMode == MeasureSpec.UNSPECIFIED)
+                cWidthMeasureSpec = widthMeasureSpec;
+            else
+                cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidthInVerticalMode(widthSize), widthMode);
+
+            cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.UNSPECIFIED);
         } else
         {
-            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(widthSize, widthMode);
+            if (heightMode == MeasureSpec.UNSPECIFIED)
+                cHeightMeasureSpec = heightMeasureSpec;
+            else
+                cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(getRowHeightInHorizontalMode(heightSize), heightMode);
+
+            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(widthSize, MeasureSpec.UNSPECIFIED);
         }
-        cHeightMeasureSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.UNSPECIFIED);
 
         int row = 0;
         int col = 0;
