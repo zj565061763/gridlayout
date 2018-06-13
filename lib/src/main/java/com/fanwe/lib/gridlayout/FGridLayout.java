@@ -549,10 +549,6 @@ public class FGridLayout extends ViewGroup
             final int lastRow = mRowHeightHolder.size() - 1;
             final int lastCol = mColumnWidthHolder.size() - 1;
 
-            int row = 0;
-            int col = 0;
-            View child = null;
-
             int left = 0;
             int top = 0;
             int right = 0;
@@ -561,9 +557,9 @@ public class FGridLayout extends ViewGroup
             int count = getChildCount();
             for (int i = 0; i < count; i++)
             {
-                row = getRowIndex(i);
-                col = getColumnIndex(i);
-                child = getChildAt(i);
+                final int row = getRowIndex(i);
+                final int col = getColumnIndex(i);
+                final View child = getChildAt(i);
 
                 if (drawHor && row < lastRow)
                 {
@@ -573,9 +569,7 @@ public class FGridLayout extends ViewGroup
                     bottom = top + mHorizontalDivider.getIntrinsicHeight();
 
                     if (mPreferHorizontalDivider && col < lastCol)
-                    {
                         right += getVerticalSpacing();
-                    }
 
                     mHorizontalDivider.setBounds(left, top, right, bottom);
                     mHorizontalDivider.draw(canvas);
@@ -589,9 +583,7 @@ public class FGridLayout extends ViewGroup
                     bottom = child.getBottom();
 
                     if (!mPreferHorizontalDivider && row < lastRow)
-                    {
                         bottom += getHorizontalSpacing();
-                    }
 
                     mVerticalDivider.setBounds(left, top, right, bottom);
                     mVerticalDivider.draw(canvas);
