@@ -430,10 +430,10 @@ public class FGridLayout extends ViewGroup
         mRowHeightHolder.clear();
         mColumnWidthHolder.clear();
 
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        final int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
 
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        final int heightSize = MeasureSpec.getSize(heightMeasureSpec);
         final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 
         int cWidthMeasureSpec = 0;
@@ -489,17 +489,10 @@ public class FGridLayout extends ViewGroup
             child.measure(cWidthMeasureSpec, cHeightMeasureSpec);
         }
 
-        if (widthMode != MeasureSpec.EXACTLY)
-        {
-            widthSize = getTotalWidth();
-        }
+        final int widthFinal = widthMode == MeasureSpec.EXACTLY ? widthSize : getTotalWidth();
+        final int heightFinal = heightMode == MeasureSpec.EXACTLY ? heightSize : getTotalHeight();
 
-        if (heightMode != MeasureSpec.EXACTLY)
-        {
-            heightSize = getTotalHeight();
-        }
-
-        setMeasuredDimension(widthSize, heightSize);
+        setMeasuredDimension(widthFinal, heightFinal);
     }
 
     @Override
