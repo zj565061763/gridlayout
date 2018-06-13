@@ -260,7 +260,7 @@ public class FGridLayout extends ViewGroup
      * @param parentWidth
      * @return
      */
-    private int getColumnWidth(int parentWidth)
+    private int getColumnWidthInVerticalMode(int parentWidth)
     {
         final int width = parentWidth - ((mSpanCount - 1) * getVerticalSpacing())
                 - (getPaddingLeft() + getPaddingRight());
@@ -440,7 +440,7 @@ public class FGridLayout extends ViewGroup
 
         if (mOrientation == VERTICAL && widthMode == MeasureSpec.EXACTLY)
         {
-            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidth(widthSize), MeasureSpec.EXACTLY);
+            cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(getColumnWidthInVerticalMode(widthSize), MeasureSpec.EXACTLY);
         } else
         {
             cWidthMeasureSpec = MeasureSpec.makeMeasureSpec(widthSize, MeasureSpec.UNSPECIFIED);
