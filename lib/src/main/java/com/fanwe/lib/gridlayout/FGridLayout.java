@@ -94,8 +94,10 @@ public class FGridLayout extends ViewGroup
     }
 
     /**
-     * 设置布局方向，默认竖直方向<br>
-     * {@link #VERTICAL}<br>
+     * 设置布局方向，默认竖直方向
+     * <br>
+     * {@link #VERTICAL}
+     * <br>
      * {@link #HORIZONTAL}
      *
      * @param orientation
@@ -112,8 +114,10 @@ public class FGridLayout extends ViewGroup
     }
 
     /**
-     * 返回布局方向<br>
-     * {@link #VERTICAL}<br>
+     * 返回布局方向
+     * <br>
+     * {@link #VERTICAL}
+     * <br>
      * {@link #HORIZONTAL}
      *
      * @return
@@ -124,9 +128,7 @@ public class FGridLayout extends ViewGroup
     }
 
     /**
-     * 设置行或者列的
-     * <p>
-     * 网格数量
+     * 设置行或者列的网格数量
      *
      * @param spanCount
      */
