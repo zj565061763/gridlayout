@@ -1,12 +1,12 @@
-package com.fanwe.www.gridlayout;
+package com.sd.www.gridlayout;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.GridLayout;
 
-import com.fanwe.lib.gridlayout.FGridLayout;
-import com.fanwe.www.gridlayout.adapter.ListViewAdapter;
+import com.sd.lib.gridlayout.FGridLayout;
+import com.sd.www.gridlayout.adapter.ListViewAdapter;
 
 public class MainActivity extends AppCompatActivity
 {

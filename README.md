@@ -24,7 +24,7 @@
         android:layout_height="50dp"
         android:text="切换布局方向"/>
 
-    <com.fanwe.lib.gridlayout.FGridLayout
+    <com.sd.lib.gridlayout.FGridLayout
         android:id="@+id/view_grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

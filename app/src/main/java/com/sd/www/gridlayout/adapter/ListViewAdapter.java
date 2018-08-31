@@ -1,13 +1,11 @@
-package com.fanwe.www.gridlayout.adapter;
+package com.sd.www.gridlayout.adapter;
 
-import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.fanwe.lib.adapter.FSimpleAdapter;
-import com.fanwe.www.gridlayout.DataModel;
-import com.fanwe.www.gridlayout.R;
+import com.sd.lib.adapter.FSimpleAdapter;
+import com.sd.www.gridlayout.DataModel;
 
 /**
  * Created by Administrator on 2017/7/17.
@@ -18,13 +16,13 @@ public class ListViewAdapter extends FSimpleAdapter<DataModel>
     @Override
     public int getLayoutId(int position, View convertView, ViewGroup parent)
     {
-        return R.layout.item_listview;
+        return com.sd.www.gridlayout.R.layout.item_listview;
     }
 
     @Override
     public void onBindData(int position, View convertView, ViewGroup parent, DataModel model)
     {
-        TextView tv_position = get(R.id.tv_position, convertView);
+        TextView tv_position = get(com.sd.www.gridlayout.R.id.tv_position, convertView);
         tv_position.setText(String.valueOf(position));
 
 //        if (position % 2 == 0)
