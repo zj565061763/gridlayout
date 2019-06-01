@@ -241,16 +241,20 @@ public class FGridLayout extends ViewGroup
 
     private int getColumnWidthInVerticalMode(int total)
     {
-        final int value = total - ((mSpanCount - 1) * getVerticalSpacing())
-                - (getPaddingLeft() + getPaddingRight());
-        return (int) (value / (float) mSpanCount + 0.5f);
+        final int spacing = (mSpanCount - 1) * getVerticalSpacing();
+        final int padding = getPaddingLeft() + getPaddingRight();
+        final int totalSize = total - spacing - padding;
+
+        return (int) (totalSize / (float) mSpanCount + 0.5f);
     }
 
     private int getRowHeightInHorizontalMode(int total)
     {
-        final int value = total - ((mSpanCount - 1) * getHorizontalSpacing())
-                - (getPaddingTop() + getPaddingBottom());
-        return (int) (value / (float) mSpanCount + 0.5f);
+        final int spacing = (mSpanCount - 1) * getHorizontalSpacing();
+        final int padding = getPaddingTop() + getPaddingBottom();
+        final int totalSize = total - spacing - padding;
+
+        return (int) (totalSize / (float) mSpanCount + 0.5f);
     }
 
     /**
