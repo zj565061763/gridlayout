@@ -94,7 +94,7 @@ public class FGridLayout extends ViewGroup
             mOrientation = orientation;
         } else
         {
-            throw new IllegalArgumentException("orientation must be SDGridLayout.VERTICAL or SDGridLayout.HORIZONTAL");
+            throw new IllegalArgumentException("orientation must be FGridLayout.VERTICAL or FGridLayout.HORIZONTAL");
         }
     }
 
