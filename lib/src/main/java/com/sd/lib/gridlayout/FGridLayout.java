@@ -298,14 +298,15 @@ public class FGridLayout extends ViewGroup
      */
     private int getRowCount()
     {
+        final int childCount = getChildCount();
         if (mOrientation == VERTICAL)
         {
-            final int count = getChildCount() / mSpanCount;
-            final int left = getChildCount() % mSpanCount;
+            final int count = childCount / mSpanCount;
+            final int left = childCount % mSpanCount;
             return left == 0 ? count : count + 1;
         } else
         {
-            return mSpanCount;
+            return childCount < mSpanCount ? childCount : mSpanCount;
         }
     }
 
@@ -316,13 +317,14 @@ public class FGridLayout extends ViewGroup
      */
     private int getColumnCount()
     {
+        final int childCount = getChildCount();
         if (mOrientation == VERTICAL)
         {
-            return mSpanCount;
+            return childCount < mSpanCount ? childCount : mSpanCount;
         } else
         {
-            final int count = getChildCount() / mSpanCount;
-            final int left = getChildCount() % mSpanCount;
+            final int count = childCount / mSpanCount;
+            final int left = childCount % mSpanCount;
             return left == 0 ? count : count + 1;
         }
     }
